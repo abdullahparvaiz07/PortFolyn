@@ -7,7 +7,7 @@ const OWNER_ACCOUNT = {
   id: 'owner',
   name: 'Abdullah Parvaiz',
   email: 'abdullahparvaizofficial@gmail.com',
-  password: 'CVify@2026',   // owner's pre-set password
+  password: 'PortFolyn@2026',   // owner's pre-set password
   role: 'owner',
   avatar: 'AP',
 }

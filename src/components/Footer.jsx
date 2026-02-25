@@ -6,21 +6,21 @@ export default function Footer() {
   return (
     <footer style={{ background: '#111827', color: '#9ca3af', marginTop: 'auto' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '48px 24px 24px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 40, marginBottom: 40 }}>
+        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 40, marginBottom: 40 }}>
           {/* Brand */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
               <div style={{
                 width: 36, height: 36, borderRadius: 10,
-                background: 'linear-gradient(135deg, #2563eb, #6366f1)',
+                background: 'linear-gradient(135deg, #7c3aed, #fbbf24)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
                 <FileText size={18} color="white" />
               </div>
-              <div style={{ fontWeight: 800, fontSize: 18, color: 'white', lineHeight: 1 }}>CVify</div>
+              <div style={{ fontWeight: 800, fontSize: 18, color: 'white', lineHeight: 1 }}>PortFolyn</div>
             </div>
             <p style={{ fontSize: 14, lineHeight: 1.7, color: '#6b7280' }}>
-              CVify — Professional CV builder with AI-powered suggestions and ATS-friendly templates.
+              PortFolyn — Professional CV builder with AI-powered suggestions and ATS-friendly templates.
             </p>
           </div>
 
@@ -94,7 +94,7 @@ export default function Footer() {
         </div>
 
         <div style={{ borderTop: '1px solid #1f2937', paddingTop: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
-          <div style={{ fontSize: 13 }}>© 2026 CVify. All rights reserved.</div>
+          <div style={{ fontSize: 13 }}>© 2026 PortFolyn. All rights reserved.</div>
           <div style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6 }}>
             Built by <span style={{ color: 'white', fontWeight: 600, marginLeft: 4 }}>Abdullah Parvaiz</span>
             &nbsp;·&nbsp; Made with <Heart size={13} color="#ef4444" fill="#ef4444" style={{ margin: '0 4px' }} /> for job seekers

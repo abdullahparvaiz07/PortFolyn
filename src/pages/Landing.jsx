@@ -55,7 +55,7 @@ export default function Landing() {
               letterSpacing: '-0.03em',
             }}>
               Build Your{' '}
-              <span style={{ background: 'linear-gradient(135deg, #60a5fa, #818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              <span style={{ background: 'linear-gradient(135deg, #c4b5fd, #fbbf24)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                 Professional CV
               </span>
               {' '}in Minutes
@@ -158,7 +158,7 @@ export default function Landing() {
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 40, background: t.color, opacity: 0.85 }} />
                   <div style={{ padding: '48px 12px 12px' }}>
                     {[90, 100, 80, 70, 90].map((w, i) => (
-                      <div key={i} style={{ height: 4, background: t.color, opacity: 0.25, borderRadius: 2, marginBottom: 7, width: `${w}%` }} />
+                      <div key={i} style={{ height: '28%', background: t.color, display: 'flex', alignItems: 'flex-end', padding: '0 12px 10px', opacity: 0.9, marginBottom: 7, width: `${w}%` }} />
                     ))}
                   </div>
                 </div>
@@ -257,14 +257,15 @@ export default function Landing() {
         <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}
           style={{
             maxWidth: 800, margin: '0 auto', textAlign: 'center',
-            background: 'linear-gradient(135deg, #1a2e5a, #2e1065)',
+            background: `radial-gradient(ellipse at 30% 50%, rgba(124,58,237,0.14) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 30%, rgba(251,191,36,0.06) 0%, transparent 60%)`,
             borderRadius: 24, padding: 'clamp(48px, 6vw, 72px) clamp(32px, 5vw, 64px)',
             position: 'relative', overflow: 'hidden',
             border: '1px solid #3b82f630',
-            boxShadow: '0 0 60px rgba(59,130,246,0.12)',
+            boxShadow: '0 0 60px rgba(124,58,237,0.18)',
           }}>
-          <div style={{ position: 'absolute', top: -40, right: -40, width: 200, height: 200, borderRadius: '50%', background: 'rgba(59,130,246,0.06)' }} />
-          <div style={{ position: 'absolute', bottom: -60, left: -40, width: 250, height: 250, borderRadius: '50%', background: 'rgba(129,140,248,0.05)' }} />
+          <div style={{ position: 'absolute', top: -40, right: -40, width: 200, height: 200, borderRadius: '50%', background: 'rgba(124,58,237,0.08)' }} />
+          <div style={{ position: 'absolute', bottom: -60, left: -40, width: 250, height: 250, borderRadius: '50%', background: 'rgba(251,191,36,0.05)' }} />
           <div style={{ position: 'relative', zIndex: 1 }}>
             <CheckCircle size={48} color="#60a5fa" style={{ marginBottom: 20, opacity: 0.9 }} />
             <h2 style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: 800, color: '#e6edf3', fontFamily: 'Poppins, sans-serif', marginBottom: 14 }}>

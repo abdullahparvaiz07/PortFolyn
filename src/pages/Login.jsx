@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import { FileText, Mail, Lock, User, Eye, EyeOff, Sparkles, Shield, AlertCircle } from 'lucide-react'
+import { FileText, Mail, Lock, User, Eye, EyeOff, Sparkles, AlertCircle } from 'lucide-react'
 
 export default function Login() {
   const { login, register } = useAuth()
@@ -50,14 +50,14 @@ export default function Login() {
 
   return (
     <div style={{
-      minHeight: '100vh', background: '#0d1117',
+      minHeight: '100vh', background: '#0d0d14',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       padding: '24px',
       position: 'relative', overflow: 'hidden',
     }}>
       {/* Background glows */}
-      <div style={{ position: 'absolute', top: '-20%', left: '-10%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
-      <div style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(129,140,248,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', top: '-20%', left: '-10%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(251,191,36,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
       <motion.div
         initial={{ opacity: 0, y: 30, scale: 0.97 }}
@@ -69,28 +69,28 @@ export default function Login() {
         <div style={{ textAlign: 'center', marginBottom: 36 }}>
           <div style={{
             width: 56, height: 56, borderRadius: 16,
-            background: 'linear-gradient(135deg, #3b82f6, #818cf8)',
+            background: 'linear-gradient(135deg, #7c3aed, #fbbf24)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 16px',
-            boxShadow: '0 0 32px rgba(59,130,246,0.35)',
+            boxShadow: '0 0 32px rgba(124,58,237,0.4)',
           }}>
             <FileText size={26} color="white" />
           </div>
-          <h1 style={{ fontWeight: 900, fontSize: 28, color: '#e6edf3', fontFamily: 'Poppins, sans-serif', letterSpacing: '-0.02em', marginBottom: 6 }}>CVify</h1>
-          <p style={{ color: '#8b949e', fontSize: 14 }}>Professional CV Builder</p>
+          <h1 style={{ fontWeight: 900, fontSize: 28, color: '#ede9fe', fontFamily: 'Poppins, sans-serif', letterSpacing: '-0.02em', marginBottom: 6 }}>PortFolyn</h1>
+          <p style={{ color: '#9b959e', fontSize: 14 }}>Professional CV Builder</p>
         </div>
 
         {/* Card */}
-        <div style={{ background: '#161b22', border: '1px solid #30363d', borderRadius: 16, padding: '32px 32px 28px', boxShadow: '0 16px 48px rgba(0,0,0,0.4)' }}>
+        <div style={{ background: '#13111e', border: '1px solid #2d2a4a', borderRadius: 16, padding: '32px 32px 28px', boxShadow: '0 16px 48px rgba(0,0,0,0.5)' }}>
           {/* Tabs */}
-          <div style={{ display: 'flex', background: '#0d1117', borderRadius: 10, padding: 4, marginBottom: 28 }}>
+          <div style={{ display: 'flex', background: '#0d0d14', borderRadius: 10, padding: 4, marginBottom: 28 }}>
             {[['login', 'Sign In'], ['register', 'Create Account']].map(([m, label]) => (
               <button key={m} onClick={() => switchMode(m)} style={{
                 flex: 1, padding: '9px 0', borderRadius: 7, border: 'none', cursor: 'pointer',
                 fontWeight: 700, fontSize: 14, fontFamily: 'Inter, sans-serif', transition: 'all 0.2s',
-                background: mode === m ? 'linear-gradient(135deg, #3b82f6, #6366f1)' : 'transparent',
-                color: mode === m ? 'white' : '#8b949e',
-                boxShadow: mode === m ? '0 2px 8px rgba(59,130,246,0.3)' : 'none',
+                background: mode === m ? 'linear-gradient(135deg, #7c3aed, #fbbf24)' : 'transparent',
+                color: mode === m ? 'white' : '#9b959e',
+                boxShadow: mode === m ? '0 2px 8px rgba(124,58,237,0.35)' : 'none',
               }}>
                 {label}
               </button>
@@ -150,24 +150,11 @@ export default function Login() {
             </button>
           </form>
 
-          {/* Owner hint */}
-          {mode === 'login' && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
-              style={{ marginTop: 20, background: '#0f1f3d', border: '1px solid #3b82f630', borderRadius: 10, padding: '12px 14px', display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-              <Shield size={15} color="#60a5fa" style={{ marginTop: 1, flexShrink: 0 }} />
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: '#60a5fa', marginBottom: 3 }}>Owner Access</div>
-                <div style={{ fontSize: 11.5, color: '#8b949e', lineHeight: 1.6 }}>
-                  Email: <span style={{ color: '#c9d1d9' }}>abdullahparvaizofficial@gmail.com</span><br />
-                  Password: <span style={{ color: '#c9d1d9' }}>CVify@2026</span>
-                </div>
-              </div>
-            </motion.div>
-          )}
+
         </div>
 
         <p style={{ textAlign: 'center', color: '#484f58', fontSize: 13, marginTop: 20 }}>
-          © 2026 CVify · Built by Abdullah Parvaiz
+          © 2026 PortFolyn · Built by Abdullah Parvaiz
         </p>
       </motion.div>
     </div>

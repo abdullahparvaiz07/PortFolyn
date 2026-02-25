@@ -23,9 +23,9 @@ export default function Navbar() {
 
   return (
     <nav style={{
-      background: 'rgba(13,17,23,0.85)',
+      background: 'rgba(13,13,20,0.88)',
       backdropFilter: 'blur(16px)',
-      borderBottom: '1px solid #30363d',
+      borderBottom: '1px solid #2d2a4a',
       position: 'sticky', top: 0, zIndex: 100,
     }}>
       <div style={{
@@ -36,13 +36,13 @@ export default function Navbar() {
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
           <div style={{
             width: 36, height: 36, borderRadius: 10,
-            background: 'linear-gradient(135deg, #3b82f6, #818cf8)',
+            background: 'linear-gradient(135deg, #7c3aed, #fbbf24)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 0 16px rgba(59,130,246,0.35)',
+            boxShadow: '0 0 18px rgba(124,58,237,0.45)',
           }}>
             <FileText size={18} color="white" />
           </div>
-          <div style={{ fontWeight: 800, fontSize: 20, color: '#e6edf3', lineHeight: 1, letterSpacing: '-0.02em' }}>CVify</div>
+          <div style={{ fontWeight: 800, fontSize: 20, color: '#ede9fe', lineHeight: 1, letterSpacing: '-0.02em' }}>PortFolyn</div>
         </Link>
 
         {/* Desktop Nav */}
@@ -52,9 +52,9 @@ export default function Navbar() {
               display: 'flex', alignItems: 'center', gap: 6,
               padding: '8px 14px', borderRadius: 8, textDecoration: 'none',
               fontSize: 14, fontWeight: 500,
-              color: location.pathname === link.to ? '#60a5fa' : '#8b949e',
-              background: location.pathname === link.to ? '#1e3a5f' : 'transparent',
-              border: location.pathname === link.to ? '1px solid #3b82f630' : '1px solid transparent',
+              color: location.pathname === link.to ? '#c4b5fd' : '#9b959e',
+              background: location.pathname === link.to ? '#2e1065' : 'transparent',
+              border: location.pathname === link.to ? '1px solid #7c3aed30' : '1px solid transparent',
               transition: 'all 0.2s ease',
             }}>
               {link.icon} {link.label}
@@ -70,58 +70,57 @@ export default function Navbar() {
             <div style={{ position: 'relative', marginLeft: 8 }}>
               <button onClick={() => setUserMenuOpen(!userMenuOpen)} style={{
                 display: 'flex', alignItems: 'center', gap: 8,
-                background: '#1c2333', border: '1px solid #30363d', borderRadius: 10,
+                background: '#1a1730', border: '1px solid #2d2a4a', borderRadius: 10,
                 padding: '6px 10px 6px 6px', cursor: 'pointer', transition: 'all 0.2s',
               }}
-                onMouseEnter={e => e.currentTarget.style.borderColor = '#3b82f650'}
-                onMouseLeave={e => e.currentTarget.style.borderColor = '#30363d'}
+                onMouseEnter={e => e.currentTarget.style.borderColor = '#7c3aed50'}
+                onMouseLeave={e => e.currentTarget.style.borderColor = '#2d2a4a'}
               >
                 <div style={{
                   width: 30, height: 30, borderRadius: 8,
                   background: user.role === 'owner'
                     ? 'linear-gradient(135deg, #f59e0b, #ef4444)'
-                    : 'linear-gradient(135deg, #3b82f6, #818cf8)',
+                    : 'linear-gradient(135deg, #7c3aed, #fbbf24)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontSize: 13, fontWeight: 800, color: 'white',
                 }}>
                   {user.role === 'owner' ? <Crown size={14} /> : user.avatar}
                 </div>
                 <div style={{ textAlign: 'left' }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#e6edf3', lineHeight: 1 }}>{user.name.split(' ')[0]}</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#ede9fe', lineHeight: 1 }}>{user.name.split(' ')[0]}</div>
                   {user.role === 'owner' && (
                     <div style={{ fontSize: 10, color: '#f59e0b', fontWeight: 600, marginTop: 2 }}>Owner</div>
                   )}
                 </div>
-                <ChevronDown size={14} color="#8b949e" />
+                <ChevronDown size={14} color="#9b959e" />
               </button>
 
               {/* Dropdown */}
               {userMenuOpen && (
                 <div style={{
                   position: 'absolute', top: '110%', right: 0, minWidth: 220,
-                  background: '#161b22', border: '1px solid #30363d', borderRadius: 12,
-                  boxShadow: '0 16px 48px rgba(0,0,0,0.5)', padding: '8px', zIndex: 200,
+                  background: '#13111e', border: '1px solid #2d2a4a', borderRadius: 12,
+                  boxShadow: '0 16px 48px rgba(0,0,0,0.6)', padding: '8px', zIndex: 200,
                 }}>
-                  {/* Profile info */}
-                  <div style={{ padding: '10px 12px 12px', borderBottom: '1px solid #21262d', marginBottom: 6 }}>
+                  <div style={{ padding: '10px 12px 12px', borderBottom: '1px solid #201d36', marginBottom: 6 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                       <div style={{
                         width: 38, height: 38, borderRadius: 10, flexShrink: 0,
                         background: user.role === 'owner'
                           ? 'linear-gradient(135deg, #f59e0b, #ef4444)'
-                          : 'linear-gradient(135deg, #3b82f6, #818cf8)',
+                          : 'linear-gradient(135deg, #7c3aed, #fbbf24)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         fontSize: 16, fontWeight: 800, color: 'white',
                       }}>
                         {user.role === 'owner' ? <Crown size={16} /> : user.avatar}
                       </div>
                       <div>
-                        <div style={{ fontWeight: 700, fontSize: 14, color: '#e6edf3' }}>{user.name}</div>
-                        <div style={{ fontSize: 12, color: '#8b949e', marginTop: 2 }}>{user.email}</div>
+                        <div style={{ fontWeight: 700, fontSize: 14, color: '#ede9fe' }}>{user.name}</div>
+                        <div style={{ fontSize: 12, color: '#9b959e', marginTop: 2 }}>{user.email}</div>
                       </div>
                     </div>
                     {user.role === 'owner' && (
-                      <div style={{ marginTop: 10, background: '#1a1200', border: '1px solid #f59e0b30', borderRadius: 7, padding: '6px 10px', display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <div style={{ marginTop: 10, background: '#1a0a00', border: '1px solid #f59e0b30', borderRadius: 7, padding: '6px 10px', display: 'flex', alignItems: 'center', gap: 6 }}>
                         <Crown size={12} color="#f59e0b" />
                         <span style={{ fontSize: 11.5, color: '#f59e0b', fontWeight: 600 }}>Owner · Full Access</span>
                       </div>
@@ -153,12 +152,12 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div style={{ background: '#161b22', borderTop: '1px solid #30363d', padding: '12px 24px 16px' }}>
+        <div style={{ background: '#13111e', borderTop: '1px solid #2d2a4a', padding: '12px 24px 16px' }}>
           {links.map(link => (
             <Link key={link.to} to={link.to} onClick={() => setMenuOpen(false)} style={{
               display: 'flex', alignItems: 'center', gap: 8, padding: '10px 0',
               textDecoration: 'none', fontSize: 15, fontWeight: 500,
-              color: '#8b949e', borderBottom: '1px solid #21262d',
+              color: '#9b959e', borderBottom: '1px solid #201d36',
             }}>
               {link.icon} {link.label}
             </Link>
@@ -176,7 +175,6 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* Close user menu on outside click */}
       {userMenuOpen && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 199 }} onClick={() => setUserMenuOpen(false)} />
       )}
