@@ -31,7 +31,7 @@ export default function Footer() {
               Professional CV builder with AI-powered suggestions and ATS-friendly templates.
             </p>
             {/* Social icons */}
-            <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
+            <div className="footer-social" style={{ display: 'flex', gap: 10, marginTop: 16 }}>
               {[Github, Twitter, Linkedin].map((Icon, i) => (
                 <a key={i} href="#" style={{
                   width: 34, height: 34, borderRadius: 8, background: '#1a1730',
