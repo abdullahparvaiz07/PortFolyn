@@ -8,7 +8,7 @@ export default function Footer() {
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: 'clamp(32px,5vw,56px) clamp(16px,4vw,32px) 24px' }}>
 
         {/* Main grid — collapses to 2 col on tablet, 1 col on mobile */}
-        <div style={{
+        <div className="footer-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 160px), 1fr))',
           gap: 'clamp(24px, 4vw, 40px)',
@@ -16,7 +16,7 @@ export default function Footer() {
         }}>
 
           {/* Brand — spans full width on small screens */}
-          <div style={{ gridColumn: 'span 1' }}>
+          <div className="footer-col" style={{ gridColumn: 'span 1' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
               <div style={{
                 width: 34, height: 34, borderRadius: 9, flexShrink: 0,
@@ -49,7 +49,7 @@ export default function Footer() {
           </div>
 
           {/* Product */}
-          <div>
+          <div className="footer-col">
             <h4 style={{ color: 'white', fontWeight: 700, fontSize: 13, marginBottom: 14, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Product</h4>
             {[{ to: '/builder', label: 'Create CV' }, { to: '/templates', label: 'Templates' }, { to: '/dashboard', label: 'Dashboard' }].map(l => (
               <Link key={l.to} to={l.to} style={{
@@ -107,7 +107,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div style={{
+        <div className="footer-bottom" style={{
           borderTop: '1px solid #2d2a4a', paddingTop: 20,
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
           flexWrap: 'wrap', gap: 10,

@@ -282,8 +282,12 @@ textarea.form-input { resize: vertical; min-height: 80px; }
   /* Cards full width */
   .card { border-radius: 10px; }
 
-  /* Footer grid → single column */
+  /* Footer grid → single column, all content centered */
   .footer-grid { grid-template-columns: 1fr !important; }
+  .footer-col { text-align: center; align-items: center; }
+  .footer-col > div:first-child { justify-content: center; }
+  .footer-col a, .footer-col > div { justify-content: center; }
+  .footer-bottom { justify-content: center !important; text-align: center; }
 
   /* Buttons full width on mobile */
   .btn-full-mobile {
