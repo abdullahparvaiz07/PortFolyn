@@ -427,6 +427,7 @@ export default function Builder() {
   const [showSections, setShowSections] = useState(false)
   const [showATS, setShowATS] = useState(false)
   const [savedMsg, setSavedMsg] = useState(false)
+  const [pdfLoading, setPdfLoading] = useState(false)
   const [mobilePanel, setMobilePanel] = useState('form') // 'form' | 'preview'
   const cv = useCVStore(s => s.cv)
   const settings = useCVStore(s => s.settings)
@@ -459,19 +460,31 @@ export default function Builder() {
   }
 
   const handlePDFExport = async () => {
-    const element = document.getElementById('cv-preview-inner')
-    if (!element) return
+    // Use the hidden off-screen element so PDF works even when preview panel is hidden on mobile
+    const element = document.getElementById('cv-pdf-export') || document.getElementById('cv-preview-inner')
+    if (!element) { alert('Preview not ready. Please try again.'); return }
+    setPdfLoading(true)
     try {
-      const canvas = await html2canvas(element, { scale: 2, useCORS: true })
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        width: element.scrollWidth,
+        height: element.scrollHeight,
+      })
       const imgData = canvas.toDataURL('image/png')
       const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-      const pdfWidth = pdf.internal.pageSize.getWidth()
+      const pdfWidth  = pdf.internal.pageSize.getWidth()
       const pdfHeight = pdf.internal.pageSize.getHeight()
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight)
-      pdf.save(`${cv.personal.name || 'cv'}.pdf`)
+      pdf.save(`${cv.personal.name || 'PortFolyn-CV'}.pdf`)
       if (currentCVId) trackDownload(currentCVId)
     } catch (err) {
-      console.error('PDF export failed', err)
+      console.error('PDF export failed:', err)
+      alert('PDF export failed. Please try again.')
+    } finally {
+      setPdfLoading(false)
     }
   }
 
@@ -492,14 +505,14 @@ export default function Builder() {
     <div>
       {/* Mobile Form/Preview tab toggle */}
       <div style={{ display: 'none' }} className="mobile-panel-toggle">
-        <div style={{ display: 'flex', background: '#161b22', borderBottom: '1px solid #30363d' }}>
-          {[['form', 'Edit CV'], ['preview', 'Preview']].map(([panel, label]) => (
+        <div style={{ display: 'flex', background: '#13111e', borderBottom: '1px solid #2d2a4a' }}>
+          {[['form', '✏️ Edit CV'], ['preview', '👁 Preview']].map(([panel, label]) => (
             <button key={panel} onClick={() => setMobilePanel(panel)} style={{
-              flex: 1, padding: '12px', border: 'none', cursor: 'pointer',
+              flex: 1, padding: '13px', border: 'none', cursor: 'pointer',
               fontWeight: 700, fontSize: 14, fontFamily: 'Inter, sans-serif',
-              background: mobilePanel === panel ? '#1e3a5f' : 'transparent',
-              color: mobilePanel === panel ? '#60a5fa' : '#8b949e',
-              borderBottom: mobilePanel === panel ? '2px solid #3b82f6' : '2px solid transparent',
+              background: mobilePanel === panel ? '#2e1065' : 'transparent',
+              color: mobilePanel === panel ? '#c4b5fd' : '#9b959e',
+              borderBottom: mobilePanel === panel ? '2px solid #7c3aed' : '2px solid transparent',
             }}>
               {label}
             </button>
@@ -507,14 +520,14 @@ export default function Builder() {
         </div>
       </div>
 
-      <div className="builder-layout" style={{ display: 'flex', height: 'calc(100vh - 64px)', overflow: 'hidden', background: '#0d1117' }}>
+      <div className="builder-layout" style={{ display: 'flex', height: 'calc(100vh - 64px)', overflow: 'hidden', background: '#0d0d14' }}>
       {/* ── Left Panel: Form ────────────────────────────────────────────── */}
       <div className="builder-left-panel" style={{
-        width: 420, flexShrink: 0, background: '#161b22',
-        borderRight: '1px solid #30363d', display: 'flex', flexDirection: 'column', overflowY: 'auto',
+        width: 420, flexShrink: 0, background: '#13111e',
+        borderRight: '1px solid #2d2a4a', display: 'flex', flexDirection: 'column', overflowY: 'auto',
       }}>
         {/* Toolbar */}
-        <div style={{ padding: '12px 16px', borderBottom: '1px solid #21262d', display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
+        <div style={{ padding: '12px 16px', borderBottom: '1px solid #201d36', display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
           <button className="btn-ghost" style={{ fontSize: 12 }} onClick={() => setShowSections(!showSections)}>
             <GripVertical size={14} /> Sections
           </button>
@@ -573,7 +586,7 @@ export default function Builder() {
         )}
 
         {/* Template picker */}
-        <div style={{ padding: '10px 16px', borderBottom: '1px solid #21262d', display: 'flex', gap: 6, overflowX: 'auto' }}>
+        <div style={{ padding: '10px 16px', borderBottom: '1px solid #201d36', display: 'flex', gap: 6, overflowX: 'auto' }}>
           {TEMPLATES.map(t => (
             <button key={t.id} onClick={() => setTemplate(t.id)} style={{
               flexShrink: 0, padding: '5px 12px', borderRadius: 999, fontSize: 11.5, fontWeight: 600, cursor: 'pointer', border: 'none', fontFamily: 'Inter, sans-serif',
@@ -586,13 +599,13 @@ export default function Builder() {
         </div>
 
         {/* Form tabs */}
-        <div style={{ display: 'flex', borderBottom: '1px solid #21262d', overflowX: 'auto' }}>
+        <div style={{ display: 'flex', borderBottom: '1px solid #201d36', overflowX: 'auto' }}>
           {FORM_TABS.map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{
               flexShrink: 0, padding: '10px 14px', background: 'none', border: 'none', cursor: 'pointer',
               fontWeight: 600, fontSize: 12.5, fontFamily: 'Inter, sans-serif',
-              color: activeTab === tab.id ? '#60a5fa' : '#8b949e',
-              borderBottom: activeTab === tab.id ? '2px solid #3b82f6' : '2px solid transparent',
+              color: activeTab === tab.id ? '#c4b5fd' : '#9b959e',
+              borderBottom: activeTab === tab.id ? '2px solid #7c3aed' : '2px solid transparent',
               display: 'flex', alignItems: 'center', gap: 5,
               transition: 'color 0.2s',
             }}>
@@ -618,30 +631,44 @@ export default function Builder() {
         </div>
 
         {/* Bottom action bar */}
-        <div style={{ padding: '12px 16px', borderTop: '1px solid #21262d', display: 'flex', gap: 8, background: '#161b22' }}>
+        <div style={{ padding: '12px 16px', borderTop: '1px solid #201d36', display: 'flex', gap: 8, background: '#13111e' }}>
           <button className="btn-ghost" style={{ flex: 1, justifyContent: 'center', fontSize: 13 }} onClick={handleSave}>
             {savedMsg ? <><CheckCircle size={15} color="#10b981" /> Saved!</> : <><Save size={15} /> Save</>}
           </button>
           <button className="btn-ghost" style={{ flex: 1, justifyContent: 'center', fontSize: 13 }} onClick={handleShare}>
             <Share2 size={15} /> Share
           </button>
-          <button className="btn-primary" style={{ flex: 1.5, justifyContent: 'center', fontSize: 13 }} onClick={handlePDFExport}>
-            <Download size={15} /> PDF
+          <button className="btn-primary" style={{ flex: 1.5, justifyContent: 'center', fontSize: 13, opacity: pdfLoading ? 0.7 : 1 }} onClick={handlePDFExport} disabled={pdfLoading}>
+            {pdfLoading ? '⏳ Exporting…' : <><Download size={15} /> PDF</>}
           </button>
         </div>
       </div>
 
       {/* ── Right Panel: Live Preview ────────────────────────────────────── */}
-      <div className="builder-right-panel" style={{ flex: 1, background: '#0a0e15', overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '24px 16px' }}>
-        <div style={{ fontSize: 12, color: '#9ca3af', marginBottom: 16, fontWeight: 500 }}>LIVE PREVIEW — A4 Format</div>
-        <div id="cv-preview-inner" className="builder-preview-inner" style={{ width: '210mm', background: 'white', minHeight: '297mm', boxShadow: '0 4px 24px rgba(0,0,0,0.5)', overflow: 'hidden' }}>
-          <CVPreview scale={1} />
+      <div className="builder-right-panel" style={{ flex: 1, background: '#070710', overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px 16px' }}>
+        <div style={{ fontSize: 11, color: '#4a4560', marginBottom: 12, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Live Preview · A4</div>
+        {/* Responsive preview wrapper — scales to fit screen */}
+        <div className="cv-preview-scaler" style={{ width: '100%', maxWidth: '210mm', overflow: 'hidden' }}>
+          <div id="cv-preview-inner" className="builder-preview-inner" style={{ width: '210mm', background: 'white', minHeight: '297mm', boxShadow: '0 8px 40px rgba(0,0,0,0.6)', overflow: 'hidden', transformOrigin: 'top left' }}>
+            <CVPreview scale={1} />
+          </div>
         </div>
         <div style={{ marginTop: 24, display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
-          <button className="btn-primary" onClick={handlePDFExport}><Download size={16} /> Download PDF</button>
+          <button className="btn-primary" onClick={handlePDFExport} disabled={pdfLoading}
+            style={{ opacity: pdfLoading ? 0.7 : 1 }}>
+            {pdfLoading ? '⏳ Exporting…' : <><Download size={16} /> Download PDF</>}
+          </button>
           <button className="btn-outline" onClick={handleShare}><Share2 size={16} /> Copy Share Link</button>
         </div>
       </div>
+
+      {/* Hidden off-screen element — always rendered for reliable PDF export on mobile */}
+      <div id="cv-pdf-export" style={{
+        position: 'fixed', left: '-9999px', top: 0,
+        width: '210mm', background: 'white', overflow: 'hidden',
+        pointerEvents: 'none', zIndex: -1,
+      }}>
+        <CVPreview scale={1} />
       </div>
 
       <style>{`
@@ -650,6 +677,21 @@ export default function Builder() {
           .builder-left-panel { display: ${mobilePanel === 'form' ? 'flex' : 'none'} !important; }
           .builder-right-panel { display: ${mobilePanel === 'preview' ? 'flex' : 'none'} !important; }
           .builder-layout { height: auto !important; overflow: visible !important; }
+          .cv-preview-scaler { overflow-x: auto !important; }
+        }
+        @media (max-width: 480px) {
+          .builder-preview-inner {
+            transform: scale(0.42) !important;
+            transform-origin: top left !important;
+            margin-bottom: -58% !important;
+          }
+        }
+        @media (min-width: 481px) and (max-width: 768px) {
+          .builder-preview-inner {
+            transform: scale(0.58) !important;
+            transform-origin: top left !important;
+            margin-bottom: -42% !important;
+          }
         }
       `}</style>
     </div>
