@@ -27,7 +27,7 @@ export default function Footer() {
               </div>
               <div style={{ fontWeight: 800, fontSize: 17, color: 'white', lineHeight: 1 }}>PortFolyn</div>
             </div>
-            <p style={{ fontSize: 13, lineHeight: 1.75, color: '#6b6880', maxWidth: 220 }}>
+            <p style={{ fontSize: 13, lineHeight: 1.75, color: '#6b6880', maxWidth: 220, margin: '0 auto' }}>
               Professional CV builder with AI-powered suggestions and ATS-friendly templates.
             </p>
             {/* Social icons */}
@@ -63,7 +63,7 @@ export default function Footer() {
           </div>
 
           {/* Features */}
-          <div>
+          <div className="footer-col">
             <h4 style={{ color: 'white', fontWeight: 700, fontSize: 13, marginBottom: 14, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Features</h4>
             {['Live Preview', 'PDF Export', 'ATS Checker', 'AI Suggestions', 'Google/GitHub Login'].map(f => (
               <div key={f} style={{ fontSize: 14, color: '#6b6880', marginBottom: 10 }}>{f}</div>
@@ -71,7 +71,7 @@ export default function Footer() {
           </div>
 
           {/* Author */}
-          <div>
+          <div className="footer-col">
             <h4 style={{ color: 'white', fontWeight: 700, fontSize: 13, marginBottom: 14, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Author</h4>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
               <div style={{
