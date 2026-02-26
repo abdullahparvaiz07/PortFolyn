@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   Sparkles, Download, Eye, Palette, GripVertical, CheckCircle,
-  Star, ArrowRight, Zap, Shield, Globe, Users
+  ArrowRight, Zap, Shield, Globe
 } from 'lucide-react'
+import Comments from '../components/Comments'
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }
 const stagger = { show: { transition: { staggerChildren: 0.1 } } }
@@ -26,11 +27,7 @@ const templates = [
   { name: 'Tech Professional', color: '#22d3ee', bg: '#0f2d3d' },
 ]
 
-const testimonials = [
-  { name: 'Sarah K.', role: 'Software Engineer', text: 'Got my dream job at a top tech company! The ATS checker was a game changer.', stars: 5 },
-  { name: 'James M.', role: 'Marketing Manager', text: 'The templates look incredibly professional. I received callbacks within a week!', stars: 5 },
-  { name: 'Priya S.', role: 'Data Scientist', text: 'The AI suggestions helped me articulate my experience so much better.', stars: 5 },
-]
+
 
 export default function Landing() {
   return (
@@ -85,10 +82,10 @@ export default function Landing() {
             </motion.div>
 
             <motion.div variants={fadeUp} style={{ display: 'flex', justifyContent: 'center', gap: 40, marginTop: 56, flexWrap: 'wrap' }}>
-              {[['50K+', 'CVs Created'], ['95%', 'ATS Pass Rate'], ['5', 'Templates'], ['Free', 'Forever']].map(([val, label]) => (
+              {[['95%', 'ATS Pass Rate'], ['5', 'Templates'], ['Free', 'Forever']].map(([val, label]) => (
                 <div key={label} style={{ textAlign: 'center' }}>
                   <div className="stat-value" style={{ fontSize: 30, fontWeight: 800, fontFamily: 'Poppins, sans-serif' }}>{val}</div>
-                  <div style={{ fontSize: 13, color: '#484f58', marginTop: 4 }}>{label}</div>
+                  <div style={{ fontSize: 13, color: '#4a4560', marginTop: 4 }}>{label}</div>
                 </div>
               ))}
             </motion.div>
@@ -202,7 +199,7 @@ export default function Landing() {
                     <div style={{
                       position: 'absolute', top: -8, right: -8,
                       width: 22, height: 22, borderRadius: 99,
-                      background: 'linear-gradient(135deg, #3b82f6, #818cf8)',
+                      background: 'linear-gradient(135deg, #7c3aed, #fbbf24)',
                       color: 'white', fontSize: 10, fontWeight: 800,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>{item.step}</div>
@@ -216,41 +213,8 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section style={{ padding: '80px 24px', background: '#0a0e15' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} style={{ textAlign: 'center', marginBottom: 48 }}>
-            <motion.div variants={fadeUp}>
-              <span className="badge badge-blue" style={{ marginBottom: 14, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                <Users size={12} /> Success Stories
-              </span>
-            </motion.div>
-            <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: 800, color: '#e6edf3', fontFamily: 'Poppins, sans-serif' }}>
-              Loved by job seekers
-            </motion.h2>
-          </motion.div>
-
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
-            {testimonials.map((t) => (
-              <motion.div key={t.name} variants={fadeUp} className="card" style={{ padding: 28 }}>
-                <div style={{ display: 'flex', gap: 4, marginBottom: 16 }}>
-                  {Array.from({ length: t.stars }).map((_, i) => (
-                    <Star key={i} size={15} color="#fbbf24" fill="#fbbf24" />
-                  ))}
-                </div>
-                <p style={{ color: '#c9d1d9', fontSize: 15, lineHeight: 1.65, marginBottom: 20, fontStyle: 'italic' }}>
-                  "{t.text}"
-                </p>
-                <div>
-                  <div style={{ fontWeight: 700, color: '#e6edf3', fontSize: 14 }}>{t.name}</div>
-                  <div style={{ color: '#8b949e', fontSize: 13 }}>{t.role}</div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+      {/* Real user comments section */}
+      <Comments />
 
       {/* CTA Banner */}
       <section style={{ padding: '80px 24px' }}>
@@ -272,7 +236,7 @@ export default function Landing() {
               Ready to land your dream job?
             </h2>
             <p style={{ color: '#8b949e', fontSize: 18, marginBottom: 32, lineHeight: 1.7 }}>
-              Join thousands of professionals who built their CV with CVify
+              Start building your professional CV today — it's completely free
             </p>
             <Link to="/builder" style={{ textDecoration: 'none' }}>
               <button className="btn-primary" style={{ padding: '14px 32px', fontSize: 16 }}>
