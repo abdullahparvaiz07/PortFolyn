@@ -254,19 +254,13 @@ textarea.form-input { resize: vertical; min-height: 80px; }
     width: 100% !important;
     max-height: none !important;
     border-right: none !important;
-    border-bottom: 1px solid #30363d;
+    border-bottom: 1px solid #2d2a4a;
   }
   .builder-right-panel {
     flex: none !important;
     width: 100% !important;
     padding: 16px !important;
     align-items: center;
-  }
-  .builder-preview-inner {
-    width: 100% !important;
-    max-width: 500px;
-    min-height: auto !important;
-    transform-origin: top center;
   }
 
   /* General layout */
@@ -291,13 +285,6 @@ textarea.form-input { resize: vertical; min-height: 80px; }
   /* Footer grid → single column */
   .footer-grid { grid-template-columns: 1fr !important; }
 
-  /* Builder preview → scaled down */
-  .builder-preview-inner {
-    transform: scale(0.45);
-    transform-origin: top left;
-    margin-bottom: -54% !important;
-  }
-
   /* Buttons full width on mobile */
   .btn-full-mobile {
     width: 100%;
@@ -307,13 +294,3 @@ textarea.form-input { resize: vertical; min-height: 80px; }
   /* Padding reduction */
   .section-pad { padding: 48px 16px !important; }
 }
-
-/* Extra small: 480px and below */
-@media (max-width: 480px) {
-  .builder-preview-inner {
-    transform: scale(0.38);
-    transform-origin: top left;
-    margin-bottom: -62% !important;
-  }
-}
-

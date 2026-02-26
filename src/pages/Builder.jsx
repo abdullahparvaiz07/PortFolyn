@@ -661,6 +661,8 @@ export default function Builder() {
           <button className="btn-outline" onClick={handleShare}><Share2 size={16} /> Copy Share Link</button>
         </div>
       </div>
+      </div>
+      {/* End builder-layout ↑ */}
 
       {/* Hidden off-screen element — always rendered for reliable PDF export on mobile */}
       <div id="cv-pdf-export" style={{
