@@ -2,15 +2,25 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 import { signInWithPopup } from 'firebase/auth'
 import { auth, googleProvider, githubProvider, isFirebaseConfigured } from '../config/firebase'
 
-// ── Pre-seeded owner account ───────────────────────────────────────────────────
-const OWNER_ACCOUNT = {
-  id: 'owner',
-  name: 'Abdullah Parvaiz',
-  email: 'abdullahparvaizofficial@gmail.com',
-  password: 'PortFolyn@2026',
-  role: 'owner',
-  avatar: 'AP',
-}
+// ── Pre-seeded owner accounts ─────────────────────────────────────────────────
+const OWNER_ACCOUNTS = [
+  {
+    id: 'owner',
+    name: 'Abdullah Parvaiz',
+    email: 'abdullahparvaizofficial@gmail.com',
+    password: 'PortFolyn@2026',
+    role: 'owner',
+    avatar: 'AP',
+  },
+  {
+    id: 'owner2',
+    name: 'Fahad Ali',
+    email: 'fahadali9355@gmail.com',
+    password: 'PortFolyn@2026',
+    role: 'owner',
+    avatar: 'FA',
+  },
+]
 
 const USERS_KEY  = 'portfolyn_users'
 const SESSION_KEY = 'portfolyn_session'
@@ -19,13 +29,18 @@ function getUsers() {
   try {
     const stored = localStorage.getItem(USERS_KEY)
     const users  = stored ? JSON.parse(stored) : []
-    if (!users.find(u => u.id === 'owner')) {
-      users.unshift(OWNER_ACCOUNT)
-      localStorage.setItem(USERS_KEY, JSON.stringify(users))
+    // Ensure all owner accounts are always present
+    let changed = false
+    for (const owner of OWNER_ACCOUNTS) {
+      if (!users.find(u => u.id === owner.id)) {
+        users.unshift(owner)
+        changed = true
+      }
     }
+    if (changed) localStorage.setItem(USERS_KEY, JSON.stringify(users))
     return users
   } catch {
-    return [OWNER_ACCOUNT]
+    return [...OWNER_ACCOUNTS]
   }
 }
 
