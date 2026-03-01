@@ -8,49 +8,151 @@ const TEMPLATES = [
   { id: 'modern-minimal', name: 'Modern Minimal', color: '#3b82f6', bg: '#1e3a5f',
     tags: ['Clean', 'ATS', 'Popular'],
     desc: 'A sleek, contemporary design perfect for tech and creative professionals.',
-    accent: '#60a5fa',
+    accent: '#60a5fa', photo: '/avatar1.png',
   },
   { id: 'corporate-executive', name: 'Corporate Executive', color: '#60a5fa', bg: '#1a2e5a',
     tags: ['Professional', 'ATS', 'Sidebar'],
     desc: 'Two-column layout with sidebar — ideal for senior roles and corporate positions.',
-    accent: '#93c5fd',
+    accent: '#93c5fd', photo: '/avatar2.png',
   },
   { id: 'creative-designer', name: 'Creative Designer', color: '#818cf8', bg: '#2e1065',
     tags: ['Creative', 'Bold', 'Two-column'],
     desc: 'Stand out with a diagonal header and vibrant layout. Great for design roles.',
-    accent: '#a5b4fc',
+    accent: '#a5b4fc', photo: '/avatar3.png',
   },
   { id: 'academic-research', name: 'Academic Research', color: '#34d399', bg: '#064e3b',
     tags: ['Academic', 'Serif', 'Classic'],
     desc: 'Scholarly serif typography with a centered header — perfect for academia.',
-    accent: '#6ee7b7',
+    accent: '#6ee7b7', photo: '/avatar1.png',
   },
   { id: 'tech-professional', name: 'Tech Professional', color: '#22d3ee', bg: '#0f2d3d',
     tags: ['Dark Mode', 'Code Style', 'Terminal'],
     desc: 'Dark terminal-inspired theme with code-comment headers. Built for developers.',
-    accent: '#67e8f9',
+    accent: '#67e8f9', photo: '/avatar2.png',
+  },
+  { id: 'elegant-classic', name: 'Elegant Classic', color: '#c9973a', bg: '#2a1f0a',
+    tags: ['Serif', 'Formal', 'Gold'],
+    desc: 'Timeless serif typography with decorative double-line borders and gold accents.',
+    accent: '#e4b96a', photo: '/avatar3.png',
+  },
+  { id: 'neon-futuristic', name: 'Neon Futuristic', color: '#00f5ff', bg: '#060614',
+    tags: ['Dark', 'Neon', 'Two-column'],
+    desc: 'Cyberpunk-inspired neon cyan/magenta gradients on a deep dark background.',
+    accent: '#f000ff', photo: '/avatar1.png',
+  },
+  { id: 'natural-flow', name: 'Natural Flow', color: '#c26b2f', bg: '#2d1a08',
+    tags: ['Warm', 'Card-based', 'Modern'],
+    desc: 'Warm earthy tones with rounded card sections — human, vibrant, and approachable.',
+    accent: '#e8955a', photo: '/avatar2.png',
   },
 ]
 
 function TemplateThumbnail({ template }) {
+  const isDark = ['tech-professional', 'neon-futuristic'].includes(template.id)
+  const isWarm = template.id === 'natural-flow'
+  const isSidebar = ['corporate-executive'].includes(template.id)
+  const bgBase = isDark ? '#0a1120' : isWarm ? '#2d1a08' : '#161b22'
+  const lineColor = 'rgba(255,255,255,0.22)'
+  const strongLine = 'rgba(255,255,255,0.65)'
+  const accentLine = template.color
+
   return (
     <div style={{ width: '100%', paddingBottom: '132%', position: 'relative', borderRadius: 10, overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', inset: 0, background: template.id === 'tech-professional' ? '#0a1120' : '#161b22' }}>
-        {/* Simulated template preview */}
-        <div style={{ height: '28%', background: template.color, display: 'flex', alignItems: 'flex-end', padding: '0 12px 10px', opacity: 0.9 }}>
-          <div>
-            <div style={{ height: 8, width: 80, background: 'rgba(255,255,255,0.85)', borderRadius: 4 }} />
-            <div style={{ height: 5, width: 50, background: 'rgba(255,255,255,0.45)', borderRadius: 4, marginTop: 5 }} />
-          </div>
+      <div style={{ position: 'absolute', inset: 0, background: bgBase }}>
+
+        {/* ── Header bar ── */}
+        <div style={{
+          position: 'absolute', top: 0,
+          left: 0, right: isSidebar ? 'auto' : 0,
+          width: isSidebar ? '36%' : '100%',
+          height: isSidebar ? '100%' : '32%',
+          background: template.id === 'neon-futuristic'
+            ? 'linear-gradient(135deg, #0d0d2b 60%, #1a0030)'
+            : template.color,
+          borderRight: isSidebar ? `1px solid ${template.color}55` : 'none',
+          borderBottom: template.id === 'neon-futuristic' ? `2px solid ${template.color}` : 'none',
+          opacity: 0.95,
+        }} />
+
+        {/* ── Profile photo ── */}
+        <div style={{
+          position: 'absolute',
+          top: isSidebar ? 12 : '7%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: isSidebar ? 36 : 40,
+          height: isSidebar ? 36 : 40,
+          borderRadius: '50%',
+          overflow: 'hidden',
+          border: `2px solid rgba(255,255,255,0.7)`,
+          boxShadow: `0 2px 10px rgba(0,0,0,0.5)`,
+          zIndex: 3,
+        }}>
+          <img src={template.photo} alt=""
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', display: 'block' }} />
         </div>
-        <div style={{ padding: 12 }}>
-          {[70, 100, 85, 60, 90, 75].map((w, i) => (
-            <div key={i} style={{ height: 4, background: template.color, opacity: 0.3, borderRadius: 2, marginBottom: 7, width: `${w}%` }} />
-          ))}
-          <div style={{ marginTop: 10 }}>
-            <div style={{ height: 6, width: '50%', background: template.color, opacity: 0.2, borderRadius: 2, marginBottom: 6 }} />
-            {[90, 80, 100].map((w, i) => (
-              <div key={i} style={{ height: 3, background: '#30363d', borderRadius: 2, marginBottom: 5, width: `${w}%` }} />
+
+        {/* ── Sidebar column (Corporate Executive) ── */}
+        {isSidebar && (
+          <div style={{ position: 'absolute', top: 56, left: 0, width: '36%', padding: '0 6px' }}>
+            <div style={{ height: 4, width: '60%', background: strongLine, borderRadius: 2, margin: '0 auto 3px' }} />
+            <div style={{ height: 3, width: '80%', background: lineColor, borderRadius: 2, margin: '0 auto 3px' }} />
+            <div style={{ height: 3, width: '70%', background: lineColor, borderRadius: 2, margin: '0 auto 10px' }} />
+            <div style={{ height: 4, width: '55%', background: accentLine, borderRadius: 2, opacity: 0.8, margin: '0 auto 5px' }} />
+            {[1,2,3,4].map(i => (
+              <div key={i} style={{ height: 8, background: `${accentLine}40`, borderRadius: 4, marginBottom: 4, width: `${[90,75,85,65][i-1]}%` }} />
+            ))}
+          </div>
+        )}
+
+        {/* ── Main content area ── */}
+        <div style={{
+          position: 'absolute',
+          top: isSidebar ? 10 : '34%',
+          left: isSidebar ? '38%' : 10,
+          right: 10,
+          bottom: 8,
+        }}>
+          {!isSidebar && (
+            <>
+              <div style={{ height: 6, width: '65%', background: strongLine, borderRadius: 3, marginBottom: 4 }} />
+              <div style={{ height: 3, width: '45%', background: `${accentLine}cc`, borderRadius: 2, marginBottom: 10 }} />
+            </>
+          )}
+
+          {/* EXPERIENCE */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 5 }}>
+            <div style={{ height: 3, width: 3, borderRadius: '50%', background: accentLine }} />
+            <div style={{ height: 4, width: 42, background: accentLine, borderRadius: 2, opacity: 0.9 }} />
+            <div style={{ flex: 1, height: 1, background: `${accentLine}40` }} />
+          </div>
+          <div style={{ height: 4, width: '80%', background: strongLine, borderRadius: 2, marginBottom: 3 }} />
+          <div style={{ height: 3, width: '55%', background: lineColor, borderRadius: 2, marginBottom: 3 }} />
+          <div style={{ height: 3, width: '90%', background: lineColor, borderRadius: 2, marginBottom: 3 }} />
+          <div style={{ height: 3, width: '70%', background: lineColor, borderRadius: 2, marginBottom: 8 }} />
+
+          {/* EDUCATION */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 5 }}>
+            <div style={{ height: 3, width: 3, borderRadius: '50%', background: accentLine }} />
+            <div style={{ height: 4, width: 36, background: accentLine, borderRadius: 2, opacity: 0.9 }} />
+            <div style={{ flex: 1, height: 1, background: `${accentLine}40` }} />
+          </div>
+          <div style={{ height: 4, width: '75%', background: strongLine, borderRadius: 2, marginBottom: 3 }} />
+          <div style={{ height: 3, width: '50%', background: lineColor, borderRadius: 2, marginBottom: 8 }} />
+
+          {/* SKILLS */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 6 }}>
+            <div style={{ height: 3, width: 3, borderRadius: '50%', background: accentLine }} />
+            <div style={{ height: 4, width: 28, background: accentLine, borderRadius: 2, opacity: 0.9 }} />
+            <div style={{ flex: 1, height: 1, background: `${accentLine}40` }} />
+          </div>
+          <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+            {[32, 44, 28, 38, 24].map((w, i) => (
+              <div key={i} style={{
+                height: 9, width: w, borderRadius: 99,
+                background: i % 2 === 0 ? `${accentLine}55` : `${accentLine}28`,
+                border: `1px solid ${accentLine}50`,
+              }} />
             ))}
           </div>
         </div>
@@ -80,7 +182,7 @@ export default function Templates() {
       <div style={{ background: 'linear-gradient(135deg, #0f1f3d, #1a1040)', padding: 'clamp(40px, 6vw, 72px) 24px', textAlign: 'center' }}>
         <span className="badge badge-blue" style={{ marginBottom: 16 }}>🎨 Template Gallery</span>
         <h1 style={{ fontSize: 'clamp(28px, 5vw, 52px)', fontWeight: 900, color: '#e6edf3', fontFamily: 'Poppins, sans-serif', marginBottom: 14 }}>
-          5 Professional Templates
+          8 Professional Templates
         </h1>
         <p style={{ color: '#8b949e', fontSize: 18, maxWidth: 520, margin: '0 auto' }}>
           Each template is ATS-optimized, fully customizable, and designed to impress hiring managers.
@@ -88,9 +190,10 @@ export default function Templates() {
       </div>
 
       {/* Template Grid */}
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '56px 24px' }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto', padding: 'clamp(28px,5vw,56px) clamp(12px,4vw,24px)' }}>
         <motion.div initial="hidden" animate="show" variants={stagger}
-          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 28 }}>
+          className="templates-grid"
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 24 }}>
           {TEMPLATES.map(template => (
             <motion.div key={template.id} variants={fadeUp} className="card card-hover" style={{
               overflow: 'hidden',

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useCVStore } from '../store/cvStore'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -30,6 +30,9 @@ const TEMPLATES = [
   { id: 'creative-designer', label: 'Creative Designer', color: '#7c3aed' },
   { id: 'academic-research', label: 'Academic Research', color: '#065f46' },
   { id: 'tech-professional', label: 'Tech Professional', color: '#0f172a' },
+  { id: 'elegant-classic', label: 'Elegant Classic', color: '#92702a' },
+  { id: 'neon-futuristic', label: 'Neon Futuristic', color: '#00f5ff' },
+  { id: 'natural-flow', label: 'Natural Flow', color: '#c26b2f' },
 ]
 
 // ── AI SUGGESTIONS ────────────────────────────────────────────────────────────
@@ -421,6 +424,23 @@ const FORM_TABS = [
   { id: 'languages', label: 'Languages', icon: <Languages size={16} /> },
 ]
 
+// Hook: dynamically scale a 210mm (794px) div to fit the container
+function usePreviewScale(containerRef) {
+  const [scale, setScale] = useState(1)
+  useEffect(() => {
+    if (!containerRef.current) return
+    const compute = () => {
+      const w = containerRef.current.clientWidth
+      setScale(Math.min(1, w / 794))
+    }
+    compute()
+    const ro = new ResizeObserver(compute)
+    ro.observe(containerRef.current)
+    return () => ro.disconnect()
+  }, [containerRef])
+  return scale
+}
+
 export default function Builder() {
   const [activeTab, setActiveTab] = useState('personal')
   const [showColorPicker, setShowColorPicker] = useState(false)
@@ -440,6 +460,8 @@ export default function Builder() {
   const trackDownload = useCVStore(s => s.trackDownload)
   const currentCVId = useCVStore(s => s.currentCVId)
   const previewRef = useRef(null)
+  const previewContainerRef = useRef(null)
+  const previewScale = usePreviewScale(previewContainerRef)
 
   // DnD sensors
   const sensors = useSensors(useSensor(PointerSensor))
@@ -647,12 +669,31 @@ export default function Builder() {
       {/* ── Right Panel: Live Preview ────────────────────────────────────── */}
       <div className="builder-right-panel" style={{ flex: 1, background: '#070710', overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px 16px' }}>
         <div style={{ fontSize: 11, color: '#4a4560', marginBottom: 12, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Live Preview · A4</div>
-        {/* Responsive preview wrapper — scales to fit screen */}
-        <div className="cv-preview-scaler" style={{ width: '100%', maxWidth: '210mm', overflow: 'hidden' }}>
-          <div id="cv-preview-inner" className="builder-preview-inner" style={{ width: '210mm', background: 'white', minHeight: '297mm', boxShadow: '0 8px 40px rgba(0,0,0,0.6)', overflow: 'hidden', transformOrigin: 'top left' }}>
-            <CVPreview scale={1} />
+
+        {/* Responsive preview wrapper — scales full A4 to container width */}
+        <div
+          ref={previewContainerRef}
+          style={{ width: '100%', maxWidth: 794, position: 'relative' }}
+        >
+          {/* Outer box that reserves the scaled height */}
+          <div style={{ width: '100%', paddingTop: `${297 / 210 * 100}%`, position: 'relative' }}>
+            <div
+              id="cv-preview-inner"
+              style={{
+                position: 'absolute', top: 0, left: 0,
+                width: 794, height: 1123,
+                transformOrigin: 'top left',
+                transform: `scale(${previewScale})`,
+                background: 'white',
+                boxShadow: '0 8px 40px rgba(0,0,0,0.6)',
+                overflow: 'hidden',
+              }}
+            >
+              <CVPreview />
+            </div>
           </div>
         </div>
+
         <div style={{ marginTop: 24, display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
           <button className="btn-primary" onClick={handlePDFExport} disabled={pdfLoading}
             style={{ opacity: pdfLoading ? 0.7 : 1 }}>
@@ -679,21 +720,6 @@ export default function Builder() {
           .builder-left-panel { display: ${mobilePanel === 'form' ? 'flex' : 'none'} !important; }
           .builder-right-panel { display: ${mobilePanel === 'preview' ? 'flex' : 'none'} !important; }
           .builder-layout { height: auto !important; overflow: visible !important; }
-          .cv-preview-scaler { overflow-x: auto !important; }
-        }
-        @media (max-width: 480px) {
-          .builder-preview-inner {
-            transform: scale(0.42) !important;
-            transform-origin: top left !important;
-            margin-bottom: -58% !important;
-          }
-        }
-        @media (min-width: 481px) and (max-width: 768px) {
-          .builder-preview-inner {
-            transform: scale(0.58) !important;
-            transform-origin: top left !important;
-            margin-bottom: -42% !important;
-          }
         }
       `}</style>
     </div>

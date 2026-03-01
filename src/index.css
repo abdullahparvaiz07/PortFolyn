@@ -242,13 +242,65 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 
 /* ── Responsive Utilities ─────────────────────────────────────────────────── */
 
-/* Tablet: 768px and below */
-@media (max-width: 768px) {
-  /* Builder: stack panels vertically */
+/* Large tablet: ≤1024px */
+@media (max-width: 1024px) {
   .builder-layout {
     flex-direction: column !important;
     height: auto !important;
-    min-height: calc(100vh - 64px);
+  }
+  .builder-left-panel {
+    width: 100% !important;
+    max-height: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid #2d2a4a;
+    overflow-y: visible !important;
+  }
+  .builder-right-panel {
+    flex: none !important;
+    width: 100% !important;
+    padding: 20px 16px !important;
+    align-items: center;
+  }
+}
+
+/* Tablet: ≤768px */
+@media (max-width: 768px) {
+  /* Navbar: show hamburger, hide desktop nav */
+  .desktop-nav { display: none !important; }
+  #mobile-menu-btn { display: flex !important; }
+
+  /* General */
+  .hide-mobile { display: none !important; }
+  .full-mobile  { width: 100% !important; }
+
+  /* Landing: hero section padding */
+  .hero-section { padding: 60px 16px 80px !important; }
+
+  /* Landing: stat bar wraps */
+  .stat-bar { gap: 24px !important; flex-wrap: wrap; justify-content: center; }
+
+  /* Landing: features grid → 2 columns */
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Landing: templates strip cards narrower */
+  .template-strip-card { min-width: 150px !important; }
+
+  /* Templates page: 2-col grid */
+  .templates-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Dashboard: tips grid → 2 col */
+  .tips-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Builder */
+  .builder-layout {
+    flex-direction: column !important;
+    height: auto !important;
   }
   .builder-left-panel {
     width: 100% !important;
@@ -262,58 +314,64 @@ textarea.form-input { resize: vertical; min-height: 80px; }
     padding: 16px !important;
     align-items: center;
   }
-
-  /* General layout */
-  .hide-mobile { display: none !important; }
-  .full-mobile { width: 100% !important; }
+  .mobile-panel-toggle { display: block !important; }
 }
 
-/* Mobile: 640px and below */
+/* Small tablet / large phone: ≤640px */
 @media (max-width: 640px) {
-  /* 2-col grids → 1-col */
-  .grid-2col { grid-template-columns: 1fr !important; }
+  /* 2-col → 1-col grids */
+  .grid-2col       { grid-template-columns: 1fr !important; }
+  .features-grid   { grid-template-columns: 1fr !important; }
+  .templates-grid  { grid-template-columns: repeat(2, 1fr) !important; }
 
-  /* Hero font scaling */
+  /* Hero */
   .hero-title { font-size: clamp(28px, 10vw, 52px) !important; }
 
-  /* Stat bar wraps */
-  .stat-bar { gap: 24px !important; }
-
-  /* Cards full width */
+  /* Cards */
   .card { border-radius: 10px; }
 
-  /* Footer → single column, fully centered */
-  .footer-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .footer-col {
-    text-align: center;
-  }
-  /* Center logo row and author avatar row */
-  .footer-col > div {
-    justify-content: center;
-  }
-  /* Center social icons */
-  .footer-social {
-    justify-content: center;
-  }
-  /* Center block links */
-  .footer-col a {
-    justify-content: center;
-  }
-  /* Bottom bar: stack and center */
+  /* Buttons → full width on mobile when .btn-full-mobile applied */
+  .btn-full-mobile { width: 100%; justify-content: center; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr !important; }
+  .footer-col  { text-align: center; }
+  .footer-col > div { justify-content: center; }
+  .footer-social { justify-content: center; }
+  .footer-col a  { justify-content: center; }
   .footer-bottom {
     flex-direction: column !important;
     align-items: center !important;
     text-align: center;
   }
 
-  /* Buttons full width on mobile */
-  .btn-full-mobile {
-    width: 100%;
-    justify-content: center;
-  }
-
-  /* Padding reduction */
+  /* Section padding reduction */
   .section-pad { padding: 48px 16px !important; }
 }
+
+/* Mobile: ≤480px */
+@media (max-width: 480px) {
+  /* Templates page: 1 col on very small screens */
+  .templates-grid { grid-template-columns: 1fr !important; }
+
+  /* Landing : hero CTA buttons stack */
+  .hero-cta { flex-direction: column !important; align-items: stretch !important; }
+  .hero-cta > * { width: 100% !important; justify-content: center !important; }
+
+  /* Navbar logo text hidden on tiny screens, icon stays */
+  .navbar-logo-text { display: none !important; }
+
+  /* Dashboard header: stack vertically */
+  .dash-header { flex-direction: column !important; align-items: flex-start !important; }
+  .dash-header button { width: 100% !important; justify-content: center !important; }
+
+  /* Builder tabs: scroll horizontally */
+  .builder-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Landing: template strip shows 2.5 items */
+  .template-strip-card { min-width: 130px !important; }
+
+  /* General padding */
+  .section-pad { padding: 36px 12px !important; }
+}
+

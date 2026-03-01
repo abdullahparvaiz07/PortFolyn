@@ -32,7 +32,7 @@ export default function Dashboard() {
     <div style={{ background: '#0d1117', minHeight: 'calc(100vh - 64px)', padding: 'clamp(32px, 5vw, 64px) 24px' }}>
       <div style={{ maxWidth: 1000, margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40, flexWrap: 'wrap', gap: 16 }}>
+        <div className="dash-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40, flexWrap: 'wrap', gap: 16 }}>
           <div>
             <h1 style={{ fontSize: 'clamp(24px, 4vw, 38px)', fontWeight: 900, color: '#e6edf3', fontFamily: 'Poppins, sans-serif', marginBottom: 6 }}>
               My CVs
@@ -117,7 +117,7 @@ export default function Dashboard() {
         {/* Tips */}
         <div style={{ marginTop: 48, background: 'linear-gradient(135deg, #0f1f3d, #1a1040)', borderRadius: 14, padding: '24px 28px', border: '1px solid #3b82f630' }}>
           <h3 style={{ fontWeight: 700, fontSize: 16, color: '#60a5fa', marginBottom: 12 }}>💡 Pro Tips</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
+          <div className="tips-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12 }}>
             {[
               'Tailor your CV for each job application',
               'Use the ATS checker to boost your score',

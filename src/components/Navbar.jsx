@@ -42,7 +42,7 @@ export default function Navbar() {
           }}>
             <FileText size={18} color="white" />
           </div>
-          <div style={{ fontWeight: 800, fontSize: 20, color: '#ede9fe', lineHeight: 1, letterSpacing: '-0.02em' }}>PortFolyn</div>
+          <div className="navbar-logo-text" style={{ fontWeight: 800, fontSize: 20, color: '#ede9fe', lineHeight: 1, letterSpacing: '-0.02em' }}>PortFolyn</div>
         </Link>
 
         {/* Desktop Nav */}
@@ -180,7 +180,7 @@ export default function Navbar() {
       )}
 
       <style>{`
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           #mobile-menu-btn { display: flex !important; }
         }
