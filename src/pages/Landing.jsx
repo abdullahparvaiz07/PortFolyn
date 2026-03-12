@@ -22,12 +22,12 @@ const features = [
 const templates = [
   { name: 'Modern Minimal',     color: '#3b82f6', bg: '#1e3a5f', photo: '/avatar1.png' },
   { name: 'Corporate Executive', color: '#60a5fa', bg: '#1a2e5a', photo: '/avatar2.png' },
-  { name: 'Creative Designer',   color: '#818cf8', bg: '#2e1065', photo: '/avatar3.png' },
   { name: 'Academic Research',   color: '#34d399', bg: '#064e3b', photo: '/avatar1.png' },
   { name: 'Tech Professional',   color: '#22d3ee', bg: '#0f2d3d', photo: '/avatar2.png' },
   { name: 'Elegant Classic',     color: '#c9973a', bg: '#2a1f0a', photo: '/avatar3.png' },
-  { name: 'Neon Futuristic',     color: '#00f5ff', bg: '#060614', photo: '/avatar1.png' },
-  { name: 'Natural Flow',        color: '#c26b2f', bg: '#2d1a08', photo: '/avatar2.png' },
+  { name: 'Golden Pro',          color: '#d4a017', bg: '#1a1400', photo: '/avatar1.png' },
+  { name: 'Vintage Muse',        color: '#c4956a', bg: '#2d2018', photo: '/avatar3.png' },
+  { name: 'Blue Sidebar',        color: '#29b6d4', bg: '#061a2e', photo: '/avatar2.png' },
 ]
 
 

@@ -15,11 +15,6 @@ const TEMPLATES = [
     desc: 'Two-column layout with sidebar — ideal for senior roles and corporate positions.',
     accent: '#93c5fd', photo: '/avatar2.png',
   },
-  { id: 'creative-designer', name: 'Creative Designer', color: '#818cf8', bg: '#2e1065',
-    tags: ['Creative', 'Bold', 'Two-column'],
-    desc: 'Stand out with a diagonal header and vibrant layout. Great for design roles.',
-    accent: '#a5b4fc', photo: '/avatar3.png',
-  },
   { id: 'academic-research', name: 'Academic Research', color: '#34d399', bg: '#064e3b',
     tags: ['Academic', 'Serif', 'Classic'],
     desc: 'Scholarly serif typography with a centered header — perfect for academia.',
@@ -35,23 +30,28 @@ const TEMPLATES = [
     desc: 'Timeless serif typography with decorative double-line borders and gold accents.',
     accent: '#e4b96a', photo: '/avatar3.png',
   },
-  { id: 'neon-futuristic', name: 'Neon Futuristic', color: '#00f5ff', bg: '#060614',
-    tags: ['Dark', 'Neon', 'Two-column'],
-    desc: 'Cyberpunk-inspired neon cyan/magenta gradients on a deep dark background.',
-    accent: '#f000ff', photo: '/avatar1.png',
+  { id: 'golden-pro', name: 'Golden Pro', color: '#d4a017', bg: '#1a1400',
+    tags: ['Bold', 'Graphic', '3-Column'],
+    desc: 'Sharp black & white layout with gold accents. Eye-catching 3-column bottom section.',
+    accent: '#f0c040', photo: '/avatar1.png',
   },
-  { id: 'natural-flow', name: 'Natural Flow', color: '#c26b2f', bg: '#2d1a08',
-    tags: ['Warm', 'Card-based', 'Modern'],
-    desc: 'Warm earthy tones with rounded card sections — human, vibrant, and approachable.',
-    accent: '#e8955a', photo: '/avatar2.png',
+  { id: 'vintage-muse', name: 'Vintage Muse', color: '#c4956a', bg: '#2d2018',
+    tags: ['Elegant', 'Serif', 'Earthy'],
+    desc: 'Warm beige editorial design with arched photo and artistic typography.',
+    accent: '#e8c49a', photo: '/avatar3.png',
+  },
+  { id: 'blue-sidebar', name: 'Blue Sidebar', color: '#0d3b5e', bg: '#061a2e',
+    tags: ['Sidebar', 'Professional', 'Bold'],
+    desc: 'Dark teal sidebar with photo and contact info, clean white main content area.',
+    accent: '#29b6d4', photo: '/avatar2.png',
   },
 ]
 
 function TemplateThumbnail({ template }) {
-  const isDark = ['tech-professional', 'neon-futuristic'].includes(template.id)
-  const isWarm = template.id === 'natural-flow'
-  const isSidebar = ['corporate-executive'].includes(template.id)
-  const bgBase = isDark ? '#0a1120' : isWarm ? '#2d1a08' : '#161b22'
+  const isDark = ['tech-professional'].includes(template.id)
+  const isWarm = template.id === 'vintage-muse'
+  const isSidebar = ['corporate-executive', 'blue-sidebar'].includes(template.id)
+  const bgBase = isDark ? '#0a1120' : isWarm ? '#2d2018' : '#161b22'
   const lineColor = 'rgba(255,255,255,0.22)'
   const strongLine = 'rgba(255,255,255,0.65)'
   const accentLine = template.color

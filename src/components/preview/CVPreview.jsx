@@ -2,22 +2,22 @@ import React from 'react'
 import { useCVStore } from '../../store/cvStore'
 import ModernMinimal from './templates/ModernMinimal'
 import CorporateExecutive from './templates/CorporateExecutive'
-import CreativeDesigner from './templates/CreativeDesigner'
 import AcademicResearch from './templates/AcademicResearch'
 import TechProfessional from './templates/TechProfessional'
 import ElegantClassic from './templates/ElegantClassic'
-import NeonFuturistic from './templates/NeonFuturistic'
-import NaturalFlow from './templates/NaturalFlow'
+import GoldenPro from './templates/GoldenPro'
+import VintageMuse from './templates/VintageMuse'
+import BlueSidebar from './templates/BlueSidebar'
 
 export const TEMPLATES = {
   'modern-minimal': ModernMinimal,
   'corporate-executive': CorporateExecutive,
-  'creative-designer': CreativeDesigner,
   'academic-research': AcademicResearch,
   'tech-professional': TechProfessional,
   'elegant-classic': ElegantClassic,
-  'neon-futuristic': NeonFuturistic,
-  'natural-flow': NaturalFlow,
+  'golden-pro': GoldenPro,
+  'vintage-muse': VintageMuse,
+  'blue-sidebar': BlueSidebar,
 }
 
 // Scaled preview — renders a full A4 at native size but the parent must set

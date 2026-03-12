@@ -27,12 +27,12 @@ const FONTS = ['Inter', 'Poppins', 'Roboto', 'Playfair Display', 'JetBrains Mono
 const TEMPLATES = [
   { id: 'modern-minimal', label: 'Modern Minimal', color: '#2563eb' },
   { id: 'corporate-executive', label: 'Corporate Executive', color: '#1e40af' },
-  { id: 'creative-designer', label: 'Creative Designer', color: '#7c3aed' },
   { id: 'academic-research', label: 'Academic Research', color: '#065f46' },
   { id: 'tech-professional', label: 'Tech Professional', color: '#0f172a' },
   { id: 'elegant-classic', label: 'Elegant Classic', color: '#92702a' },
-  { id: 'neon-futuristic', label: 'Neon Futuristic', color: '#00f5ff' },
-  { id: 'natural-flow', label: 'Natural Flow', color: '#c26b2f' },
+  { id: 'golden-pro', label: 'Golden Pro', color: '#d4a017' },
+  { id: 'vintage-muse', label: 'Vintage Muse', color: '#c4956a' },
+  { id: 'blue-sidebar', label: 'Blue Sidebar', color: '#0d3b5e' },
 ]
 
 // ── AI SUGGESTIONS ────────────────────────────────────────────────────────────
