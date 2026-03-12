@@ -30,7 +30,7 @@ const TEMPLATES = [
     desc: 'Timeless serif typography with decorative double-line borders and gold accents.',
     accent: '#e4b96a', photo: '/avatar3.png',
   },
-  { id: 'golden-pro', name: 'Golden Pro', color: '#3d5a5e', bg: '#1c2e30',
+  { id: 'golden-pro', name: 'Golden Pro', color: '#2b2b2b', bg: '#1c1c1c',
     tags: ['Sidebar', 'Timeline', 'Professional'],
     desc: 'Dark teal header with sidebar layout, skill bars, and timeline experience. Clean and corporate.',
     accent: '#6a9a9e', photo: '/avatar1.png',
