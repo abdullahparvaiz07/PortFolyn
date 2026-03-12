@@ -25,7 +25,7 @@ const templates = [
   { name: 'Academic Research',   color: '#34d399', bg: '#064e3b', photo: '/avatar1.png' },
   { name: 'Tech Professional',   color: '#22d3ee', bg: '#0f2d3d', photo: '/avatar2.png' },
   { name: 'Elegant Classic',     color: '#c9973a', bg: '#2a1f0a', photo: '/avatar3.png' },
-  { name: 'Golden Pro',          color: '#d4a017', bg: '#1a1400', photo: '/avatar1.png' },
+  { name: 'Golden Pro',          color: '#3d5a5e', bg: '#1c2e30', photo: '/avatar1.png' },
   { name: 'Vintage Muse',        color: '#c4956a', bg: '#2d2018', photo: '/avatar3.png' },
   { name: 'Blue Sidebar',        color: '#29b6d4', bg: '#061a2e', photo: '/avatar2.png' },
 ]

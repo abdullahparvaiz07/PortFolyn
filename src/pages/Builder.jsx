@@ -30,7 +30,7 @@ const TEMPLATES = [
   { id: 'academic-research', label: 'Academic Research', color: '#065f46' },
   { id: 'tech-professional', label: 'Tech Professional', color: '#0f172a' },
   { id: 'elegant-classic', label: 'Elegant Classic', color: '#92702a' },
-  { id: 'golden-pro', label: 'Golden Pro', color: '#d4a017' },
+  { id: 'golden-pro', label: 'Golden Pro', color: '#3d5a5e' },
   { id: 'vintage-muse', label: 'Vintage Muse', color: '#c4956a' },
   { id: 'blue-sidebar', label: 'Blue Sidebar', color: '#0d3b5e' },
 ]
