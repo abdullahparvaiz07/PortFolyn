@@ -37,7 +37,7 @@ const ResumeTemplateExact = ({ cv, settings }) => {
         <div className="w-[35%] bg-[#e6e6e6] relative flex flex-col items-center pb-12 z-10 flex-shrink-0">
           
           {/* Profile Picture overlapping the black banner */}
-          <div className="w-[220px] h-[220px] rounded-full border-[8px] border-white overflow-hidden absolute top-[70px] z-20 shadow-sm bg-gray-200 flex items-center justify-center">
+          <div className="w-[180px] h-[180px] rounded-full border-[6px] border-white overflow-hidden absolute top-[70px] z-20 shadow-sm bg-gray-200 flex items-center justify-center">
             {personal.photo ? (
               <img
                 src={personal.photo}
@@ -52,7 +52,7 @@ const ResumeTemplateExact = ({ cv, settings }) => {
           </div>
 
           {/* Spacer to push content down below the absolute image */}
-          <div className="w-full h-[340px]"></div>
+          <div className="w-full h-[280px]"></div>
 
           <div className="w-full px-10">
             {/* ABOUT ME */}
@@ -133,7 +133,7 @@ const ResumeTemplateExact = ({ cv, settings }) => {
 
           {/* Black Banner overlapping behind left profile pic */}
           <div 
-            className="h-[200px] w-full relative" 
+            className="h-[160px] w-full relative" 
             style={{ backgroundColor: primaryColor }}
           >
             {/* This piece extends the black bar into the left column perfectly */}
@@ -142,11 +142,11 @@ const ResumeTemplateExact = ({ cv, settings }) => {
               style={{ backgroundColor: primaryColor }}
             ></div>
             
-            <div className="flex flex-col justify-center h-full pl-10 pr-6">
-              <h1 className="text-white text-[42px] tracking-[0.15em] font-bold leading-[1.1] mb-3 uppercase truncate">
+            <div className="flex flex-col justify-center h-full pl-8 pr-6">
+              <h1 className="text-white text-[32px] tracking-[0.15em] font-bold leading-[1.1] mb-2 uppercase truncate">
                 {personal.name || 'YOUR NAME'}
               </h1>
-              <h2 className="text-white text-[18px] tracking-[0.25em] font-light uppercase truncate">
+              <h2 className="text-white text-[15px] tracking-[0.25em] font-light uppercase truncate">
                 {personal.title || 'Professional Title'}
               </h2>
             </div>
