@@ -30,11 +30,6 @@ const TEMPLATES = [
     desc: 'Timeless serif typography with decorative double-line borders and gold accents.',
     accent: '#e4b96a', photo: '/avatar3.png',
   },
-  { id: 'golden-pro', name: 'Golden Pro', color: '#2b2b2b', bg: '#1c1c1c',
-    tags: ['Sidebar', 'Timeline', 'Professional'],
-    desc: 'Dark teal header with sidebar layout, skill bars, and timeline experience. Clean and corporate.',
-    accent: '#6a9a9e', photo: '/avatar1.png',
-  },
   { id: 'vintage-muse', name: 'Vintage Muse', color: '#c4956a', bg: '#2d2018',
     tags: ['Elegant', 'Serif', 'Earthy'],
     desc: 'Warm beige editorial design with arched photo and artistic typography.',
@@ -44,6 +39,11 @@ const TEMPLATES = [
     tags: ['Sidebar', 'Professional', 'Bold'],
     desc: 'Dark teal sidebar with photo and contact info, clean white main content area.',
     accent: '#29b6d4', photo: '/avatar2.png',
+  },
+  { id: 'resume-exact', name: 'Resume Exact', color: '#242424', bg: '#1c1c1c',
+    tags: ['Dark', 'Corporate', 'Sidebar'],
+    desc: 'Modern professional layout with an impactful dark header banner and clean typography.',
+    accent: '#888', photo: '/avatar1.png',
   },
 ]
 

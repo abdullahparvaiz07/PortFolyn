@@ -5,9 +5,9 @@ import CorporateExecutive from './templates/CorporateExecutive'
 import AcademicResearch from './templates/AcademicResearch'
 import TechProfessional from './templates/TechProfessional'
 import ElegantClassic from './templates/ElegantClassic'
-import GoldenPro from './templates/GoldenPro'
 import VintageMuse from './templates/VintageMuse'
 import BlueSidebar from './templates/BlueSidebar'
+import ResumeTemplateExact from './templates/ResumeTemplateExact'
 
 export const TEMPLATES = {
   'modern-minimal': ModernMinimal,
@@ -15,9 +15,9 @@ export const TEMPLATES = {
   'academic-research': AcademicResearch,
   'tech-professional': TechProfessional,
   'elegant-classic': ElegantClassic,
-  'golden-pro': GoldenPro,
   'vintage-muse': VintageMuse,
   'blue-sidebar': BlueSidebar,
+  'resume-exact': ResumeTemplateExact,
 }
 
 // Scaled preview — renders a full A4 at native size but the parent must set
