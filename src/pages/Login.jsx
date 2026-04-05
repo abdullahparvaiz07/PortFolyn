@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { FileText, Mail, Lock, User, Eye, EyeOff, Sparkles, AlertCircle } from 'lucide-react'
 import { isFirebaseConfigured } from '../config/firebase'
 
@@ -25,6 +25,8 @@ const GithubIcon = () => (
 export default function Login() {
   const { login, register, loginWithGoogle, loginWithGithub } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/'
 
   const [mode,     setMode]     = useState('login')
   const [form,     setForm]     = useState({ name: '', email: '', password: '' })
@@ -48,7 +50,7 @@ export default function Login() {
       if (form.password.length < 6) { setError('Password must be at least 6 characters.'); setLoading(false); return }
       result = register(form.name, form.email, form.password)
     }
-    if (result.success) navigate('/')
+    if (result.success) navigate(from, { replace: true })
     else setError(result.error)
     setLoading(false)
   }
@@ -58,7 +60,7 @@ export default function Login() {
     setError('')
     const fn = provider === 'google' ? loginWithGoogle : loginWithGithub
     const result = await fn()
-    if (result.success) navigate('/')
+    if (result.success) navigate(from, { replace: true })
     else setError(result.error)
     setOauthLoading(null)
   }

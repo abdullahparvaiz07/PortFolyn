@@ -49,10 +49,10 @@ function AppLayout() {
       <main style={{ flex: 1 }}>
         <Routes>
           {/* Public route */}
+          <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
 
           {/* Protected routes */}
-          <Route path="/" element={<ProtectedRoute><Landing /></ProtectedRoute>} />
           <Route path="/builder" element={<ProtectedRoute><Builder /></ProtectedRoute>} />
           <Route path="/templates" element={<ProtectedRoute><Templates /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
