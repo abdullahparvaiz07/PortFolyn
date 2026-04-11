@@ -488,18 +488,20 @@ export default function Builder() {
     setPdfLoading(true)
     try {
       const canvas = await html2canvas(element, {
-        scale: 4, // increased scale for better quality
+        scale: 5, // ultra-high resolution scale for print-level crispness
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
         width: element.scrollWidth,
         height: element.scrollHeight,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight,
       })
       const imgData = canvas.toDataURL('image/png', 1.0)
-      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: false })
       const pdfWidth  = pdf.internal.pageSize.getWidth()
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight)
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, '', 'SLOW')
       pdf.save(`${cv.personal.name || 'PortFolyn-CV'}.pdf`)
       if (currentCVId) trackDownload(currentCVId)
     } catch (err) {
