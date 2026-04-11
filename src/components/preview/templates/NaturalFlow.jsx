@@ -67,6 +67,7 @@ export default function NaturalFlow({ cv, settings }) {
             <div style={{ fontSize: 23, fontWeight: 800, marginBottom: 6, lineHeight: 1.1 }}>
               {personal.name || 'Your Name'}
             </div>
+            {personal.title && <div style={{ fontSize: 14, fontWeight: 500, color: '#4b5563', marginTop: 4 }}>{personal.title}</div>}
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', fontSize: 10, opacity: 0.9 }}>
               {personal.email    && <span>✉ {personal.email}</span>}
               {personal.phone    && <span>📞 {personal.phone}</span>}

@@ -46,6 +46,7 @@ export default function VintageMuse({ cv, settings }) {
           <div style={{ fontSize: 10, fontWeight: 600, color: '#4a3b2a', textAlign: 'center', fontStyle: 'italic' }}>
             {personal.name || 'Your Name'}
           </div>
+          {personal.title && <div style={{ fontSize: 15, fontStyle: 'italic', color: '#5c4a3d', marginTop: 8 }}>{personal.title}</div>}
         </div>
 
         {/* Right: Contact Info */}

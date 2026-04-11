@@ -140,7 +140,7 @@ export default function BlueSidebar({ cv, settings }) {
             ))}
           </div>
           <div style={{ fontSize: 11, color: '#888', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 4 }}>
-            {personal.title || 'Graphic & Web Designer'}
+            {personal.title || 'Professional Title'}
           </div>
         </div>
 

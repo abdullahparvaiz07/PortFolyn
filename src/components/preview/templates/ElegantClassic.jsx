@@ -46,6 +46,9 @@ export default function ElegantClassic({ cv, settings }) {
         <div style={{ fontSize: 26, fontWeight: 700, letterSpacing: '0.04em', color: '#111', marginBottom: 6 }}>
           {personal.name || 'Your Name'}
         </div>
+        {personal.title && (
+          <div style={{ fontSize: 14, textAlign: 'center', color: '#6b7280', fontStyle: 'italic', marginTop: 4, marginBottom: 16 }}>{personal.title}</div>
+        )}
         <div style={{ display: 'flex', justifyContent: 'center', gap: 20, flexWrap: 'wrap', fontSize: 10, color: '#555' }}>
           {personal.email   && <span>✉ {personal.email}</span>}
           {personal.phone   && <span>📞 {personal.phone}</span>}

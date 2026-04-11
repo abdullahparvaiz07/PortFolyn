@@ -19,6 +19,7 @@ export default function CreativeDesigner({ cv, settings }) {
           )}
           <div>
             <div style={{ fontSize: 24, fontWeight: 800, marginBottom: 4 }}>{personal.name || 'Your Name'}</div>
+            {personal.title && <div style={{ fontSize: 14, fontWeight: 600, color: primaryColor, marginBottom: 10 }}>{personal.title}</div>}
             <div style={{ opacity: 0.85, display: 'flex', gap: 12, flexWrap: 'wrap', fontSize: 10.5 }}>
               {personal.email && <span>✉ {personal.email}</span>}
               {personal.phone && <span>📞 {personal.phone}</span>}

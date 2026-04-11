@@ -71,6 +71,15 @@ export default function NeonFuturistic({ cv, settings }) {
             }}>
               {personal.name || 'Your Name'}
             </div>
+            {personal.title && (
+              <div style={{
+                fontSize: 14, fontWeight: 600, color: '#9ca3af',
+                textShadow: `0 0 10px ${primaryColor}80`,
+                marginTop: 4
+              }}>
+                {personal.title}
+              </div>
+            )}
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', fontSize: 10, color: '#7a8799' }}>
               {personal.email   && <span style={{ color: NEON_CYAN }}>✉ {personal.email}</span>}
               {personal.phone   && <span>📞 {personal.phone}</span>}

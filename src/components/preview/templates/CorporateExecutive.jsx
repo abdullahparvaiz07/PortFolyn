@@ -14,6 +14,7 @@ export default function CorporateExecutive({ cv, settings }) {
           </div>
         )}
         <div style={{ fontWeight: 800, fontSize: 16, marginBottom: 4, lineHeight: 1.2 }}>{personal.name || 'Your Name'}</div>
+        {personal.title && <div style={{ fontSize: 12, fontWeight: 600, color: '#4b5563', marginBottom: 10, textTransform: 'uppercase' }}>{personal.title}</div>}
 
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.2)', marginTop: 16, paddingTop: 16 }}>
           <div style={{ fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.7, marginBottom: 10 }}>Contact</div>

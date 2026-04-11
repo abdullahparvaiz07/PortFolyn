@@ -26,6 +26,7 @@ export default function ModernMinimal({ cv, settings }) {
           )}
           <div>
             <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>{personal.name || 'Your Name'}</div>
+            {personal.title && <div style={{ fontSize: 14, fontWeight: 500, marginBottom: 8, opacity: 0.9 }}>{personal.title}</div>}
             <div style={{ opacity: 0.85, fontSize: 11, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
               {personal.email && <span>✉ {personal.email}</span>}
               {personal.phone && <span>📞 {personal.phone}</span>}

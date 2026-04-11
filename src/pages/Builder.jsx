@@ -98,7 +98,7 @@ function PersonalForm() {
   return (
     <div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-        {[['name', 'Full Name', 'John Doe'], ['email', 'Email', 'john@email.com'], ['phone', 'Phone', '+1 (555) 000-0000'], ['linkedin', 'LinkedIn', 'linkedin.com/in/john']].map(([field, label, ph]) => (
+        {[['name', 'Full Name', 'John Doe'], ['title', 'Job Title', 'Software Engineer'], ['email', 'Email', 'john@email.com'], ['phone', 'Phone', '+1 (555) 000-0000'], ['linkedin', 'LinkedIn', 'linkedin.com/in/john']].map(([field, label, ph]) => (
           <div key={field}>
             <label className="form-label">{label}</label>
             <input className="form-input" placeholder={ph} value={cv.personal[field] || ''} onChange={e => setPersonal({ [field]: e.target.value })} />

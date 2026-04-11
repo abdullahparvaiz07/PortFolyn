@@ -19,6 +19,7 @@ export default function TechProfessional({ cv, settings }) {
           )}
           <div>
             <div style={{ fontSize: 20, fontWeight: 700, color: 'white', marginBottom: 4 }}>{personal.name || 'Your Name'}</div>
+            {personal.title && <div style={{ fontSize: 12, fontWeight: 500, color: primaryColor, marginBottom: 8 }}>{personal.title}</div>}
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', fontSize: 10, color: '#94a3b8' }}>
               {personal.email && <span style={{ color: accent }}>✉ {personal.email}</span>}
               {personal.phone && <span>📞 {personal.phone}</span>}

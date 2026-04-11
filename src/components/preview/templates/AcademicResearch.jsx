@@ -12,6 +12,7 @@ export default function AcademicResearch({ cv, settings }) {
           <img src={personal.photo} alt="" style={{ width: 70, height: 70, borderRadius: '50%', objectFit: 'cover', border: `2px solid ${primaryColor}`, marginBottom: 10 }} />
         )}
         <div style={{ fontSize: 22, fontWeight: 700, color: '#111827', marginBottom: 6 }}>{personal.name || 'Your Name'}</div>
+        {personal.title && <div style={{ fontSize: 14, fontWeight: 500, color: primaryColor, marginBottom: 10, marginTop: -4 }}>{personal.title}</div>}
         <div style={{ display: 'flex', justifyContent: 'center', gap: 18, flexWrap: 'wrap', fontSize: 10, color: '#6b7280' }}>
           {personal.email && <span>✉ {personal.email}</span>}
           {personal.phone && <span>📞 {personal.phone}</span>}
