@@ -36,10 +36,19 @@ export default function Share() {
     setDownloading(true)
     const el = document.getElementById('share-cv-preview')
     if (!el) return
-    const canvas = await html2canvas(el, { scale: 2, useCORS: true })
-    const imgData = canvas.toDataURL('image/png')
+    const canvas = await html2canvas(el, {
+      scale: 4,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#ffffff',
+      width: el.scrollWidth,
+      height: el.scrollHeight,
+    })
+    const imgData = canvas.toDataURL('image/png', 1.0)
     const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-    pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight())
+    const pdfWidth = pdf.internal.pageSize.getWidth()
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight)
     pdf.save(`${cv?.personal?.name || 'shared-cv'}.pdf`)
     setDownloading(false)
   }
