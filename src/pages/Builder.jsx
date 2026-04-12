@@ -497,11 +497,11 @@ export default function Builder() {
         windowWidth: element.scrollWidth,
         windowHeight: element.scrollHeight,
       })
-      const imgData = canvas.toDataURL('image/png', 1.0)
+      const imgData = canvas.toDataURL('image/jpeg', 1.0)
       const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: false })
       const pdfWidth  = pdf.internal.pageSize.getWidth()
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, '', 'SLOW')
+      pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, '', 'FAST')
       pdf.save(`${cv.personal.name || 'PortFolyn-CV'}.pdf`)
       if (currentCVId) trackDownload(currentCVId)
     } catch (err) {
