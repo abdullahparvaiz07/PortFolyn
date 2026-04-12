@@ -504,7 +504,7 @@ export default function Builder() {
       alert("CV Data Successfully Extracted!")
     } catch (err) {
       console.error(err)
-      alert("Failed to parse CV. Make sure it's a valid PDF or text file.")
+      alert(`Failed to parse CV: ${err.message}`)
     } finally {
       setIsUploading(false)
     }

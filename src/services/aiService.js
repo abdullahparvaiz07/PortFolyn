@@ -66,7 +66,14 @@ Return ONLY pure valid JSON matching EXACTLY this schema:
   if (!response.ok) {
     const errorText = await response.text();
     console.error('Gemini API Error:', errorText);
-    throw new Error('Failed to parse CV document.');
+    let errorMsg = 'Failed to parse CV document.';
+    try {
+      const parsedError = JSON.parse(errorText);
+      if (parsedError.error?.message) {
+        errorMsg = parsedError.error.message;
+      }
+    } catch (e) {}
+    throw new Error(`API Error: ${errorMsg}`);
   }
 
   const data = await response.json();
@@ -77,7 +84,13 @@ Return ONLY pure valid JSON matching EXACTLY this schema:
   }
 
   try {
-    return JSON.parse(rawJson);
+    let cleanJson = rawJson.trim();
+    if (cleanJson.startsWith('```json')) {
+      cleanJson = cleanJson.replace(/^```json/, '').replace(/```$/, '').trim();
+    } else if (cleanJson.startsWith('```')) {
+      cleanJson = cleanJson.replace(/^```/, '').replace(/```$/, '').trim();
+    }
+    return JSON.parse(cleanJson);
   } catch (err) {
     console.error('JSON parsing failed:', err, rawJson);
     throw new Error('AI returned malformed data.');
