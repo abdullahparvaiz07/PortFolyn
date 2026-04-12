@@ -40,6 +40,7 @@ export const useCVStore = create(
       // CV data setters
       setPersonal: (personal) => set((s) => ({ cv: { ...s.cv, personal: { ...s.cv.personal, ...personal } } })),
       setSummary: (summary) => set((s) => ({ cv: { ...s.cv, summary } })),
+      setEntireCV: (data) => set({ cv: data }),
 
       addEducation: (edu) => set((s) => ({ cv: { ...s.cv, education: [...s.cv.education, { id: Date.now(), ...edu }] } })),
       updateEducation: (id, edu) => set((s) => ({ cv: { ...s.cv, education: s.cv.education.map(e => e.id === id ? { ...e, ...edu } : e) } })),

@@ -6,9 +6,10 @@ import {
   Award, FolderOpen, Languages, ChevronDown, ChevronUp,
   Plus, Trash2, GripVertical, Download, Share2, Save,
   Sparkles, CheckCircle, Eye, EyeOff, Palette, Type,
-  Lightbulb, Bug, X
+  Lightbulb, Bug, X, Upload
 } from 'lucide-react'
 import CVPreview from '../components/preview/CVPreview'
+import { parseCVFile } from '../services/aiService'
 import { HexColorPicker } from 'react-colorful'
 import {
   DndContext, closestCenter, PointerSensor, useSensor, useSensors
@@ -459,8 +460,11 @@ export default function Builder() {
   const saveCurrentCV = useCVStore(s => s.saveCurrentCV)
   const trackDownload = useCVStore(s => s.trackDownload)
   const currentCVId = useCVStore(s => s.currentCVId)
+  const setEntireCV = useCVStore(s => s.setEntireCV)
   const previewRef = useRef(null)
   const previewContainerRef = useRef(null)
+  const fileInputRef = useRef(null)
+  const [isUploading, setIsUploading] = useState(false)
   const previewScale = usePreviewScale(previewContainerRef)
 
   // DnD sensors
@@ -472,6 +476,37 @@ export default function Builder() {
       const oldIndex = settings.sectionOrder.indexOf(active.id)
       const newIndex = settings.sectionOrder.indexOf(over.id)
       setSectionOrder(arrayMove(settings.sectionOrder, oldIndex, newIndex))
+    }
+  }
+
+  const handleFileUpload = async (event) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    setIsUploading(true)
+    try {
+      const extractedData = await parseCVFile(file)
+      // Merge with store gracefully
+      setEntireCV({
+        ...cv,
+        personal: { ...cv.personal, ...(extractedData.personal || {}) },
+        summary: extractedData.summary || cv.summary,
+        education: extractedData.education?.length ? extractedData.education : cv.education,
+        experience: extractedData.experience?.length ? extractedData.experience : cv.experience,
+        skills: {
+          technical: extractedData.skills?.technical?.length ? extractedData.skills.technical : cv.skills.technical,
+          soft: extractedData.skills?.soft?.length ? extractedData.skills.soft : cv.skills.soft
+        },
+        certifications: extractedData.certifications?.length ? extractedData.certifications : cv.certifications,
+        projects: extractedData.projects?.length ? extractedData.projects : cv.projects,
+        languages: extractedData.languages?.length ? extractedData.languages : cv.languages
+      })
+      alert("CV Data Successfully Extracted!")
+    } catch (err) {
+      console.error(err)
+      alert("Failed to parse CV. Make sure it's a valid PDF or text file.")
+    } finally {
+      setIsUploading(false)
     }
   }
 
@@ -577,6 +612,11 @@ export default function Builder() {
           </select>
           <button className="btn-ghost" style={{ fontSize: 12, color: ats.score < 70 ? '#ef4444' : '#10b981' }} onClick={() => setShowATS(!showATS)}>
             <Bug size={14} /> ATS {ats.score}%
+          </button>
+          
+          <input type="file" accept=".pdf,.txt" ref={fileInputRef} onChange={handleFileUpload} style={{ display: 'none' }} />
+          <button className="btn-ghost" style={{ fontSize: 12, color: '#3b82f6', marginLeft: 'auto' }} onClick={() => fileInputRef.current?.click()} disabled={isUploading}>
+            {isUploading ? '⏳ Extracting...' : <><Upload size={14} /> Import CV</>}
           </button>
         </div>
 
