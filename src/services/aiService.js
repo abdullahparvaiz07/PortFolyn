@@ -1,30 +1,40 @@
 import * as pdfjsLib from 'pdfjs-dist';
 
-// Modern Vite setup for PDF.js Worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+// Use the legacy worker for maximum browser compatibility
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/legacy/build/pdf.worker.min.js`;
 
 async function extractTextFromPDF(file) {
   try {
     const arrayBuffer = await file.arrayBuffer();
-    const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+    const loadingTask = pdfjsLib.getDocument({ 
+      data: arrayBuffer,
+      // Disable worker to avoid path issues if the worker fails to load
+      stopAtErrors: false
+    });
+    
     const pdf = await loadingTask.promise;
     let fullText = '';
     
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i);
       const textContent = await page.getTextContent();
-      const pageText = textContent.items.map(item => item.str).join(' ');
+      const pageText = textContent.items
+        .map(item => item.str)
+        .join(' ')
+        .replace(/\s+/g, ' '); // Clean up extra spaces
       fullText += pageText + ' ';
     }
     
-    if (!fullText.trim()) {
-      throw new Error('No text content found in PDF (it might be a scanned image).');
+    const result = fullText.trim();
+    if (!result) {
+      throw new Error('This PDF seems to be empty or contains only images/scans and no readable text.');
     }
     
-    return fullText.trim();
+    return result;
   } catch (err) {
-    console.error("PDF Extraction Error:", err);
-    throw new Error(`PDF Error: ${err.message}`);
+    console.error("Internal PDF Error:", err);
+    // Include the original error message to help us fix it!
+    throw new Error(`PDF Error: ${err.message || 'Unknown error during extraction'}`);
   }
 }
 
