@@ -1,21 +1,31 @@
 import * as pdfjsLib from 'pdfjs-dist';
 
-// Use standard CDN for pdfjs worker so we don't have to bundle it
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+// Modern Vite setup for PDF.js Worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
 
 async function extractTextFromPDF(file) {
-  const arrayBuffer = await file.arrayBuffer();
-  // Provide the data to PDF.js
-  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-  let fullText = '';
-  // Loop through each page and extract text
-  for (let i = 1; i <= pdf.numPages; i++) {
-    const page = await pdf.getPage(i);
-    const textContent = await page.getTextContent();
-    const pageText = textContent.items.map(item => item.str).join(' ');
-    fullText += pageText + '\n';
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+    const pdf = await loadingTask.promise;
+    let fullText = '';
+    
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const textContent = await page.getTextContent();
+      const pageText = textContent.items.map(item => item.str).join(' ');
+      fullText += pageText + ' ';
+    }
+    
+    if (!fullText.trim()) {
+      throw new Error('No text content found in PDF (it might be a scanned image).');
+    }
+    
+    return fullText.trim();
+  } catch (err) {
+    console.error("PDF Extraction Error:", err);
+    throw new Error(`PDF Error: ${err.message}`);
   }
-  return fullText;
 }
 
 export async function parseCVFile(file) {
