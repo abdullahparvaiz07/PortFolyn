@@ -1,45 +1,40 @@
 import * as pdfjsLib from 'pdfjs-dist';
 
-// Use the legacy worker for maximum browser compatibility
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/legacy/build/pdf.worker.min.js`;
+// Disable the worker entirely — runs in main thread, works on any server/browser
+pdfjsLib.GlobalWorkerOptions.workerSrc = '';
 
 async function extractTextFromPDF(file) {
   try {
     const arrayBuffer = await file.arrayBuffer();
-    const loadingTask = pdfjsLib.getDocument({ 
+    const loadingTask = pdfjsLib.getDocument({
       data: arrayBuffer,
-      // Disable worker to avoid path issues if the worker fails to load
-      stopAtErrors: false
+      disableWorker: true,
+      stopAtErrors: false,
     });
-    
+
     const pdf = await loadingTask.promise;
     let fullText = '';
-    
+
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i);
       const textContent = await page.getTextContent();
-      const pageText = textContent.items
-        .map(item => item.str)
-        .join(' ')
-        .replace(/\s+/g, ' '); // Clean up extra spaces
+      const pageText = textContent.items.map(item => item.str).join(' ');
       fullText += pageText + ' ';
     }
-    
+
     const result = fullText.trim();
     if (!result) {
-      throw new Error('This PDF seems to be empty or contains only images/scans and no readable text.');
+      throw new Error('This PDF contains no readable text (it may be a scanned image).');
     }
-    
+
     return result;
   } catch (err) {
-    console.error("Internal PDF Error:", err);
-    // Include the original error message to help us fix it!
-    throw new Error(`PDF Error: ${err.message || 'Unknown error during extraction'}`);
+    console.error('PDF Extraction Internal Error:', err);
+    throw new Error(`PDF Error: ${err.message || 'Unknown'}`);
   }
 }
 
 export async function parseCVFile(file) {
-  // We now look for a Groq API Key!
   const apiKey = import.meta.env.VITE_GROQ_API_KEY;
   if (!apiKey) {
     throw new Error('Groq API key is not configured. Please add VITE_GROQ_API_KEY to your environment variables.');
@@ -47,16 +42,14 @@ export async function parseCVFile(file) {
 
   let textToParse = '';
 
-  // Extract pure text from the uploaded document!
   if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
     try {
       textToParse = await extractTextFromPDF(file);
     } catch (e) {
-      console.error("PDF Parsing Error:", e);
-      throw new Error('Failed to extract text from the PDF document. Make sure it is a valid PDF.');
+      console.error('PDF Parsing Error:', e);
+      throw new Error(`Failed to extract text from the PDF. ${e.message}`);
     }
   } else {
-    // If it's a simple text document
     textToParse = await file.text();
   }
 
@@ -90,11 +83,9 @@ ${textToParse}`;
     },
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
-      messages: [
-        { role: 'user', content: prompt }
-      ],
+      messages: [{ role: 'user', content: prompt }],
       temperature: 0.1,
-      response_format: { type: "json_object" }
+      response_format: { type: 'json_object' }
     })
   });
 
@@ -104,9 +95,7 @@ ${textToParse}`;
     let errorMsg = 'Failed to process CV with Groq AI.';
     try {
       const parsedError = JSON.parse(errorText);
-      if (parsedError.error?.message) {
-        errorMsg = parsedError.error.message;
-      }
+      if (parsedError.error?.message) errorMsg = parsedError.error.message;
     } catch (e) {}
     throw new Error(`Groq API Error: ${errorMsg}`);
   }
@@ -128,6 +117,6 @@ ${textToParse}`;
     return JSON.parse(cleanJson);
   } catch (err) {
     console.error('JSON parsing failed:', err, rawJson);
-    throw new Error('AI returned malformed Data, please try again.');
+    throw new Error('AI returned malformed data, please try again.');
   }
 }
