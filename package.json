@@ -21,6 +21,7 @@
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.0",
     "lucide-react": "^0.575.0",
+    "pdfjs-dist": "^5.6.205",
     "react": "^19.2.0",
     "react-colorful": "^5.6.1",
     "react-dnd": "^16.0.1",

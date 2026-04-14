@@ -1,26 +1,48 @@
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+import * as pdfjsLib from 'pdfjs-dist';
 
-function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      // Remove the data URL prefix (e.g., 'data:application/pdf;base64,')
-      const base64String = reader.result.split(',')[1];
-      resolve(base64String);
-    };
-    reader.onerror = (error) => reject(error);
-  });
+// Use standard CDN for pdfjs worker so we don't have to bundle it
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+
+async function extractTextFromPDF(file) {
+  const arrayBuffer = await file.arrayBuffer();
+  // Provide the data to PDF.js
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  let fullText = '';
+  // Loop through each page and extract text
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const textContent = await page.getTextContent();
+    const pageText = textContent.items.map(item => item.str).join(' ');
+    fullText += pageText + '\n';
+  }
+  return fullText;
 }
 
 export async function parseCVFile(file) {
-  if (!GEMINI_API_KEY) {
-    throw new Error('Gemini API key is not configured.');
+  // We now look for a Groq API Key!
+  const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+  if (!apiKey) {
+    throw new Error('Groq API key is not configured. Please add VITE_GROQ_API_KEY to your environment variables.');
   }
 
-  const mimeType = file.type || 'application/pdf';
-  const base64Data = await fileToBase64(file);
+  let textToParse = '';
+
+  // Extract pure text from the uploaded document!
+  if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
+    try {
+      textToParse = await extractTextFromPDF(file);
+    } catch (e) {
+      console.error("PDF Parsing Error:", e);
+      throw new Error('Failed to extract text from the PDF document. Make sure it is a valid PDF.');
+    }
+  } else {
+    // If it's a simple text document
+    textToParse = await file.text();
+  }
+
+  if (!textToParse || textToParse.trim().length === 0) {
+    throw new Error('No readable text could be found inside this document.');
+  }
 
   const prompt = `You are an expert resume parser. Analyze this resume/CV document and extract all the information into a strict JSON payload. 
 IF ANY field is missing or not applicable, leave it as an empty string ("") or empty array ([]). Do not invent information.
@@ -35,52 +57,45 @@ Return ONLY pure valid JSON matching EXACTLY this schema:
   "certifications": [{"name": "", "issuer": "", "date": ""}],
   "projects": [{"name": "", "description": "", "url": ""}],
   "languages": [{"name": "", "level": "Fluent"}]
-}`;
+}
 
-  const payload = {
-    contents: [
-      {
-        parts: [
-          { text: prompt },
-          {
-            inlineData: {
-              mimeType: mimeType,
-              data: base64Data
-            }
-          }
-        ]
-      }
-    ],
-    generationConfig: {
-      temperature: 0.1,
-      responseMimeType: "application/json"
-    }
-  };
+Resume Text to analyze:
+${textToParse}`;
 
-  const response = await fetch(API_URL, {
+  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: 'llama-3.3-70b-versatile',
+      messages: [
+        { role: 'user', content: prompt }
+      ],
+      temperature: 0.1,
+      response_format: { type: "json_object" }
+    })
   });
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error('Gemini API Error:', errorText);
-    let errorMsg = 'Failed to parse CV document.';
+    console.error('Groq API Error:', errorText);
+    let errorMsg = 'Failed to process CV with Groq AI.';
     try {
       const parsedError = JSON.parse(errorText);
       if (parsedError.error?.message) {
         errorMsg = parsedError.error.message;
       }
     } catch (e) {}
-    throw new Error(`API Error: ${errorMsg}`);
+    throw new Error(`Groq API Error: ${errorMsg}`);
   }
 
   const data = await response.json();
-  const rawJson = data.candidates?.[0]?.content?.parts?.[0]?.text;
-  
+  const rawJson = data.choices?.[0]?.message?.content;
+
   if (!rawJson) {
-    throw new Error('Invalid response from AI parser.');
+    throw new Error('Invalid empty response from AI parser.');
   }
 
   try {
@@ -93,6 +108,6 @@ Return ONLY pure valid JSON matching EXACTLY this schema:
     return JSON.parse(cleanJson);
   } catch (err) {
     console.error('JSON parsing failed:', err, rawJson);
-    throw new Error('AI returned malformed data.');
+    throw new Error('AI returned malformed Data, please try again.');
   }
 }
