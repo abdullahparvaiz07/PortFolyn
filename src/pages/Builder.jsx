@@ -9,7 +9,6 @@ import {
   Lightbulb, Bug, X, Upload
 } from 'lucide-react'
 import CVPreview from '../components/preview/CVPreview'
-import { parseCVFile } from '../services/aiService'
 import { HexColorPicker } from 'react-colorful'
 import {
   DndContext, closestCenter, PointerSensor, useSensor, useSensors
@@ -463,8 +462,6 @@ export default function Builder() {
   const setEntireCV = useCVStore(s => s.setEntireCV)
   const previewRef = useRef(null)
   const previewContainerRef = useRef(null)
-  const fileInputRef = useRef(null)
-  const [isUploading, setIsUploading] = useState(false)
   const previewScale = usePreviewScale(previewContainerRef)
 
   // DnD sensors
@@ -479,36 +476,7 @@ export default function Builder() {
     }
   }
 
-  const handleFileUpload = async (event) => {
-    const file = event.target.files?.[0]
-    if (!file) return
 
-    setIsUploading(true)
-    try {
-      const extractedData = await parseCVFile(file)
-      // Merge with store gracefully
-      setEntireCV({
-        ...cv,
-        personal: { ...cv.personal, ...(extractedData.personal || {}) },
-        summary: extractedData.summary || cv.summary,
-        education: extractedData.education?.length ? extractedData.education : cv.education,
-        experience: extractedData.experience?.length ? extractedData.experience : cv.experience,
-        skills: {
-          technical: extractedData.skills?.technical?.length ? extractedData.skills.technical : cv.skills.technical,
-          soft: extractedData.skills?.soft?.length ? extractedData.skills.soft : cv.skills.soft
-        },
-        certifications: extractedData.certifications?.length ? extractedData.certifications : cv.certifications,
-        projects: extractedData.projects?.length ? extractedData.projects : cv.projects,
-        languages: extractedData.languages?.length ? extractedData.languages : cv.languages
-      })
-      alert("CV Data Successfully Extracted!")
-    } catch (err) {
-      console.error(err)
-      alert(`Failed to parse CV: ${err.message}`)
-    } finally {
-      setIsUploading(false)
-    }
-  }
 
   const handleSave = () => {
     saveCurrentCV()
@@ -610,13 +578,8 @@ export default function Builder() {
           <select className="form-input" style={{ width: 'auto', fontSize: 12, padding: '6px 10px' }} value={settings.font} onChange={e => setFont(e.target.value)}>
             {FONTS.map(f => <option key={f}>{f}</option>)}
           </select>
-          <button className="btn-ghost" style={{ fontSize: 12, color: ats.score < 70 ? '#ef4444' : '#10b981' }} onClick={() => setShowATS(!showATS)}>
+          <button className="btn-ghost" style={{ fontSize: 12, color: ats.score < 70 ? '#ef4444' : '#10b981', marginLeft: 'auto' }} onClick={() => setShowATS(!showATS)}>
             <Bug size={14} /> ATS {ats.score}%
-          </button>
-          
-          <input type="file" accept=".pdf,.txt" ref={fileInputRef} onChange={handleFileUpload} style={{ display: 'none' }} />
-          <button className="btn-ghost" style={{ fontSize: 12, color: '#3b82f6', marginLeft: 'auto' }} onClick={() => fileInputRef.current?.click()} disabled={isUploading}>
-            {isUploading ? '⏳ Extracting...' : <><Upload size={14} /> Import CV</>}
           </button>
         </div>
 

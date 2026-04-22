@@ -8,7 +8,6 @@ import {
 import Comments from '../components/Comments'
 import { useNavigate } from 'react-router-dom'
 import { useRef, useState } from 'react'
-import { parseCVFile } from '../services/aiService'
 import { useCVStore } from '../store/cvStore'
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }
@@ -38,36 +37,9 @@ const templates = [
 
 export default function Landing() {
   const navigate = useNavigate()
-  const fileInputRef = useRef(null)
-  const [isUploading, setIsUploading] = useState(false)
   const setEntireCV = useCVStore(s => s.setEntireCV)
 
-  const handleFileUpload = async (event) => {
-    const file = event.target.files?.[0]
-    if (!file) return
 
-    setIsUploading(true)
-    try {
-      const extractedData = await parseCVFile(file)
-      // Safely ensure the data structured matches mostly what we want
-      setEntireCV({
-        personal: extractedData.personal || {},
-        summary: extractedData.summary || '',
-        education: extractedData.education || [],
-        experience: extractedData.experience || [],
-        skills: extractedData.skills || { technical: [], soft: [] },
-        certifications: extractedData.certifications || [],
-        projects: extractedData.projects || [],
-        languages: extractedData.languages || []
-      })
-      navigate('/builder')
-    } catch (err) {
-      console.error(err)
-      alert(`Failed to parse CV: ${err.message}`)
-    } finally {
-      setIsUploading(false)
-    }
-  }
 
   return (
     <div style={{ background: '#0d1117' }}>
@@ -109,14 +81,10 @@ export default function Landing() {
 
             <motion.div variants={fadeUp} style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }} className="hero-cta">
               <Link to="/builder" style={{ textDecoration: 'none' }}>
-                <button className="btn-primary" style={{ padding: '14px 28px', fontSize: 16 }} disabled={isUploading}>
+                <button className="btn-primary" style={{ padding: '14px 28px', fontSize: 16 }}>
                   <Sparkles size={18} /> Start from Scratch
                 </button>
               </Link>
-              <input type="file" accept=".pdf,.txt" ref={fileInputRef} onChange={handleFileUpload} style={{ display: 'none' }} />
-              <button className="btn-outline" style={{ padding: '14px 28px', fontSize: 16, background: 'rgba(59,130,246,0.1)' }} onClick={() => fileInputRef.current?.click()} disabled={isUploading}>
-                {isUploading ? '⏳ Extracting AI Data...' : <><Upload size={18} /> Upload Existing CV</>}
-              </button>
             </motion.div>
 
             <motion.div variants={fadeUp} style={{ display: 'flex', justifyContent: 'center', gap: 40, marginTop: 56, flexWrap: 'wrap' }} className="stat-bar">
