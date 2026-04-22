@@ -192,6 +192,7 @@ export default function VintageMuse({ cv, settings }) {
                 <div key={proj.id} style={{ marginBottom: 12 }}>
                   <div style={{ fontWeight: 800, fontSize: 11 }}>{proj.name}</div>
                   {proj.description && <p style={{ fontSize: 10, color: '#4a3b2a', lineHeight: 1.65 }}>{proj.description}</p>}
+                  {proj.url && <div style={{ color: accent, fontSize: 9.5, marginTop: 4, fontStyle: 'italic' }}>{proj.url}</div>}
                 </div>
               ))}
             </>

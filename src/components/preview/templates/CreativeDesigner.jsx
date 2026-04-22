@@ -66,6 +66,7 @@ export default function CreativeDesigner({ cv, settings }) {
                   <div key={proj.id} style={{ marginBottom: 12 }}>
                     <div style={{ fontWeight: 700, color: '#111827' }}>{proj.name}</div>
                     {proj.description && <p style={{ color: '#4b5563', lineHeight: 1.6, marginTop: 4 }}>{proj.description}</p>}
+                    {proj.url && <div style={{ color: accent, fontSize: 10, marginTop: 4 }}>{proj.url}</div>}
                   </div>
                 ))}
               </div>

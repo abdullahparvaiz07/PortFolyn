@@ -208,6 +208,7 @@ export default function BlueSidebar({ cv, settings }) {
                 <div key={proj.id} style={{ marginBottom: 10 }}>
                   <div style={{ fontWeight: 700, fontSize: 11, color: '#111827' }}>{proj.name}</div>
                   {proj.description && <p style={{ fontSize: 10, color: '#4b5563', lineHeight: 1.6, marginTop: 3 }}>{proj.description}</p>}
+                  {proj.url && <div style={{ color: accent, fontSize: 9.5, marginTop: 2, fontWeight: 600 }}>{proj.url}</div>}
                 </div>
               ))}
             </div>

@@ -233,6 +233,11 @@ const ResumeTemplateExact = ({ cv, settings }) => {
                           {proj.description}
                         </p>
                       )}
+                      {proj.url && (
+                        <p className="text-[10px] font-medium mt-1" style={{ color: primaryColor }}>
+                          {proj.url}
+                        </p>
+                      )}
                     </div>
                   ))}
                 </div>
