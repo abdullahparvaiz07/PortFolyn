@@ -504,3 +504,32 @@ textarea.form-input { resize: vertical; min-height: 80px; }
   to { transform: translateY(0); }
 }
 
+/* From Uiverse.io by sekaiking */ 
+.btn-create-cv {
+  background-color: white;
+  color: black;
+  border-radius: 10em;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0.6em 1.5em;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid black;
+  box-shadow: 0 0 0 0 black;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-create-cv:hover {
+  transform: translateY(-4px) translateX(-2px);
+  box-shadow: 2px 5px 0 0 black;
+  background-color: white;
+}
+
+.btn-create-cv:active {
+  transform: translateY(2px) translateX(1px);
+  box-shadow: 0 0 0 0 black;
+}
+

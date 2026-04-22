@@ -62,7 +62,7 @@ export default function Navbar() {
           ))}
 
           <Link to="/builder" style={{ textDecoration: 'none', marginLeft: 4 }}>
-            <button className="btn-primary"><Sparkles size={15} /> Create CV</button>
+            <button className="btn-create-cv">Create CV</button>
           </Link>
 
           {/* User Avatar Menu */}
@@ -163,8 +163,8 @@ export default function Navbar() {
             </Link>
           ))}
           <Link to="/builder" onClick={() => setMenuOpen(false)} style={{ textDecoration: 'none' }}>
-            <button className="btn-primary" style={{ marginTop: 12, width: '100%', justifyContent: 'center' }}>
-              <Sparkles size={15} /> Create CV
+            <button className="btn-create-cv" style={{ marginTop: 12, width: '100%' }}>
+              Create CV
             </button>
           </Link>
           {user && (
