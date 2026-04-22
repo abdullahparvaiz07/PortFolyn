@@ -407,20 +407,20 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 .btn-31 {
   -webkit-tap-highlight-color: transparent;
   -webkit-appearance: button;
-  background-color: #000;
+  background-color: var(--bg-surface);
   background-image: none;
-  color: #fff;
+  color: #f8fafc;
   cursor: pointer;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
-    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif;
   font-size: 100%;
   font-weight: 900;
   line-height: 1.5;
   margin: 0;
-  -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
   padding: 0;
-  border-radius:5px;
+  border-radius: 999px;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.15);
 }
 
 .btn-31:disabled {
@@ -441,15 +441,15 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 }
 
 .btn-31 {
-  border-width: 1px;
   padding: 1rem 2rem;
   position: relative;
   text-transform: uppercase;
+  overflow: hidden;
 }
 
 .btn-31:before {
   --progress: 100%;
-  background: #fff;
+  background: linear-gradient(135deg, #7c3aed, #00f0ff);
   -webkit-clip-path: polygon(
     100% 0,
     var(--progress) var(--progress),
@@ -465,7 +465,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
   content: "";
   inset: 0;
   position: absolute;
-  transition: -webkit-clip-path 0.2s ease, clip-path 0.2s ease;
+  transition: -webkit-clip-path 0.3s cubic-bezier(0.4, 0, 0.2, 1), clip-path 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-31:hover:before {
@@ -481,8 +481,8 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 .btn-31 .text {
   display: block;
   font-weight: 900;
-  mix-blend-mode: difference;
   position: relative;
+  letter-spacing: 1px;
 }
 
 .btn-31:hover .text {
@@ -506,30 +506,33 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 
 /* From Uiverse.io by sekaiking */ 
 .btn-create-cv {
-  background-color: white;
-  color: black;
-  border-radius: 10em;
+  background: rgba(124, 58, 237, 0.1);
+  color: #ede9fe;
+  border-radius: 999px;
   font-size: 14px;
   font-weight: 600;
   padding: 0.6em 1.5em;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  border: 1px solid black;
-  box-shadow: 0 0 0 0 black;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(124, 58, 237, 0.4);
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.0);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  backdrop-filter: blur(8px);
 }
 
 .btn-create-cv:hover {
-  transform: translateY(-4px) translateX(-2px);
-  box-shadow: 2px 5px 0 0 black;
-  background-color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+  background: rgba(124, 58, 237, 0.25);
+  border-color: rgba(124, 58, 237, 0.8);
+  color: #ffffff;
 }
 
 .btn-create-cv:active {
-  transform: translateY(2px) translateX(1px);
-  box-shadow: 0 0 0 0 black;
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
 }
 
