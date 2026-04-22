@@ -42,7 +42,7 @@ export default function Landing() {
 
 
   return (
-    <div style={{ background: '#0d1117' }}>
+    <div style={{ background: 'var(--bg-base)' }}>
       {/* Hero */}
       <section className="animated-gradient hero-section" style={{ padding: 'clamp(60px,8vw,110px) clamp(16px,4vw,24px)', position: 'relative' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
@@ -87,11 +87,32 @@ export default function Landing() {
               </Link>
             </motion.div>
 
-            <motion.div variants={fadeUp} style={{ display: 'flex', justifyContent: 'center', gap: 40, marginTop: 56, flexWrap: 'wrap' }} className="stat-bar">
+            <motion.div variants={fadeUp} style={{ marginTop: 60, perspective: 1000 }}>
+              <motion.div 
+                style={{
+                  position: 'relative',
+                  margin: '0 auto',
+                  maxWidth: 900,
+                  borderRadius: 24,
+                  padding: 16,
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  boxShadow: '0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(124,58,237,0.2)',
+                  backdropFilter: 'blur(16px)'
+                }}
+                whileHover={{ rotateX: 2, rotateY: -2, scale: 1.01 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+              >
+                <img src="/dashboard_mockup.png" alt="Dashboard Mockup" style={{ width: '100%', height: 'auto', borderRadius: 12, display: 'block' }} />
+                <div style={{ position: 'absolute', inset: 0, borderRadius: 24, boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.1)', pointerEvents: 'none' }} />
+              </motion.div>
+            </motion.div>
+
+            <motion.div variants={fadeUp} style={{ display: 'flex', justifyContent: 'center', gap: 40, marginTop: 80, flexWrap: 'wrap' }} className="stat-bar">
               {[['95%', 'ATS Pass Rate'], ['8', 'Templates'], ['Free', 'Forever']].map(([val, label]) => (
                 <div key={label} style={{ textAlign: 'center' }}>
                   <div className="stat-value" style={{ fontSize: 30, fontWeight: 800, fontFamily: 'Poppins, sans-serif' }}>{val}</div>
-                  <div style={{ fontSize: 13, color: '#4a4560', marginTop: 4 }}>{label}</div>
+                  <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>{label}</div>
                 </div>
               ))}
             </motion.div>
@@ -100,7 +121,7 @@ export default function Landing() {
       </section>
 
       {/* Features */}
-      <section style={{ padding: '80px 24px', background: '#0d1117' }}>
+      <section style={{ padding: '80px 24px', background: 'var(--bg-base)' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} style={{ textAlign: 'center', marginBottom: 56 }}>
             <motion.div variants={fadeUp}>
@@ -117,8 +138,8 @@ export default function Landing() {
             {features.map((f) => (
               <motion.div key={f.title} variants={fadeUp} className="card card-hover" style={{ padding: 28 }}>
                 <div style={{
-                  width: 48, height: 48, borderRadius: 12, background: '#161b22',
-                  border: '1px solid #30363d',
+                  width: 48, height: 48, borderRadius: 12, background: 'var(--bg-surface)',
+                  border: '1px solid var(--border)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18,
                 }}>
                   {f.icon}
@@ -132,7 +153,7 @@ export default function Landing() {
       </section>
 
       {/* Templates strip */}
-      <section style={{ padding: '80px 24px', background: '#0a0e15' }}>
+      <section style={{ padding: '80px 24px', background: 'var(--bg-surface)' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} style={{ textAlign: 'center', marginBottom: 48 }}>
             <motion.div variants={fadeUp}>
@@ -214,7 +235,7 @@ export default function Landing() {
       </section>
 
       {/* How it works */}
-      <section style={{ padding: '80px 24px', background: '#0d1117' }}>
+      <section style={{ padding: '80px 24px', background: 'var(--bg-base)' }}>
         <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
             <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, color: '#e6edf3', fontFamily: 'Poppins, sans-serif', marginBottom: 52 }}>
@@ -230,7 +251,7 @@ export default function Landing() {
                 <motion.div key={item.step} variants={fadeUp} style={{ textAlign: 'center' }}>
                   <div style={{
                     width: 64, height: 64, borderRadius: 16,
-                    background: '#161b22', border: '1px solid #30363d',
+                    background: 'var(--bg-surface)', border: '1px solid var(--border)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     margin: '0 auto 16px', position: 'relative',
                   }}>
